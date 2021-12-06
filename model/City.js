@@ -6,13 +6,22 @@ const CityChema = new mongoose.Schema({
         ...validator.schemaString,
         ...validator.schemaRequired,
     },
+    slug_city: {
+        ...validator.schemaString,
+        ...validator.schemaRequired,
+    },
     district: {
         ...validator.schemaString,
         ...validator.schemaRequired,
     },
+    slug_district: {
+        ...validator.schemaString,
+    },
     sub_district: {
         ...validator.schemaString,
-        ...validator.schemaRequired,
+    },
+    slug_sub_district: {
+        ...validator.schemaString,
     },
     level: {
         ...validator.schemaNumber,

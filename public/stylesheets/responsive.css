@@ -1,0 +1,247 @@
+@media only screen and (min-width: 1241px) and (max-width: 1440px) {
+  .container {
+    max-width: calc(100% - 23rem);
+  }
+}
+
+@media only screen and (min-width: 1441px) {
+  .find__contest-info-avatar{
+    top: 52%;
+  }
+  .find__contest-share-avatar{
+    top: 48%;
+  }
+}
+
+/* PC BIG */
+@media only screen and (min-width: 1241px) {
+  .contest__info .col-lg-3 {
+    -ms-flex: 0 0 20%;
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+  .contest__info .col-lg-6 {
+    -ms-flex: 0 0 60%;
+    flex: 0 0 60%;
+    max-width: 60%;
+  }
+
+}
+
+/* PC LOWER  min-1023px */
+@media only screen and (min-width: 63.9375em) and (max-width: 1240px) {
+  .hide-on-pc-Lose {
+    display: none;
+  }
+
+  /* Page Hero  */
+  .hero__header {
+    margin-right: 10px;
+  }
+  .hero__header-list > .nav-item {
+    padding: 0 5px;
+  }
+
+  .banner__heading {
+    width: 100%;
+  }
+  .banner__content {
+    width: 59%;
+  }
+
+  /* find Contest */
+  .find__contest-img {
+    padding-bottom: 54%;
+  }
+  .find__contest-share-img {
+    padding-bottom: 48%;
+  }
+  .find__contest-info-avatar{
+    height: 35px;
+  }
+  .find__contest-share-avatar {
+    top: 38%;
+    height: 29px;
+  }
+  .find__contest-info{
+    height: 157px;
+  }
+  
+}
+
+/* Mobile & tablet */
+@media only screen and (max-width: 63.9375em) {
+  .hide-on-mobile-tablet {
+    display: none !important;
+  }
+
+  /* Page Hero */
+  .banner__heading {
+    width: 100%;
+  }
+  .banner__content {
+    width: 85%;
+  }
+  .hero__header-mobile {
+    display: block;
+  }
+
+  /* find Contest */
+  .find__contest-img {
+    padding-bottom: 43%;
+  }
+}
+
+/* Tablet */
+@media only screen and (min-width: 46.25em) and (max-width: 63.9375em) {
+  .hide-on-tablet {
+    display: none;
+  }
+
+  /* Page Hero */
+  .footer__info-content {
+    margin-top: 40px;
+  }
+}
+
+/* Mobile */
+@media only screen and (max-width: 46.1875em) {
+  .hide-on-mobile {
+    display: none;
+  }
+  .hero__header-logo-img {
+    height: 46px;
+  }
+  .hero__header-mobile .nav-link-color {
+    font-size: 1.9rem;
+  }
+  .hero__header-mobile-icon {
+    font-size: 2.7rem;
+  }
+  .hero__header-mobile-menu {
+    margin: 0 12px;
+  }
+  .hero__header-modal-text {
+    padding: 10px 80px 0;
+    line-height: 26px;
+  }
+  .hero__header-modal .modal-footer {
+    padding: 2px 0 16px;
+  }
+  .newsExam__main{
+    padding: 0 10px;
+  }
+  .banner__content {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding: 155px 20px 155px;
+  }
+  .banner__heading {
+    font-size: 3.8rem;
+  }
+  .banner__slides .owl-theme .owl-nav {
+    display: none;
+  }
+  .newsExam__header {
+    padding: 30px 8px 20px;
+    font-size: 2.6rem;
+  }
+  .footer__info-socials-link > i {
+    margin: 9px;
+  }
+  .footer__info-header {
+    font-size: 1.8rem;
+  }
+  .footer__info-content {
+    flex-wrap: wrap;
+  }
+  .footer__info-content {
+    margin-top: 30px;
+  }
+  .footer__info-text {
+    padding: 14px 0;
+  }
+
+  /* find Contest */
+
+  .find__search-input {
+    width: 95%;
+  }
+
+  .find__search-btn {
+    right: 10%;
+  }
+  .find__contest-img {
+    padding-bottom: 46%;
+  }
+  .find__contest-info-avatar {
+    top: 57%;
+  }
+  .find__contest-share-avatar {
+    top: 55%;
+  }
+  .modal-dialog{
+    width: 100% !important;
+  }
+
+}
+
+/* Iphone X --> /SE */
+@media only screen and (max-width: 24.4375em) {
+  .find__contest-info-avatar {
+    top: 54%;
+    height: 35px;
+  }
+  .find__contest-share-avatar {
+    top: 54%;
+  }
+  .hero__header-mobile .nav-link-color {
+    padding: 10px 0px;
+  }
+  .hero__header-logo-img {
+    height: 40px;
+  }
+  .find__search-btn{
+    right: 5%;
+  }
+}
+
+@media only screen and (min-width: 63.9375em) {
+  /* 5 colum Bootstrap */
+  .col-xs-5ths,
+  .col-sm-5ths,
+  .col-md-5ths,
+  .col-lg-5ths {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .col-xs-5ths {
+    width: 20%;
+    float: left;
+  }
+
+  @media (min-width: 768px) {
+    .col-sm-5ths {
+      width: 20%;
+      float: left;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .col-md-5ths {
+      width: 20%;
+      float: left;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .col-lg-5ths {
+      width: 20%;
+      float: left;
+    }
+  }
+}

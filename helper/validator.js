@@ -76,6 +76,23 @@ exports.stringToSlug = function(str) {
     return str;
 }
 
+exports.viToEn = function(str) {
+    // remove accents
+    if (exports.empty(str)) return null;
+    var from = "àáãảạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệđùúủũụưừứửữựòóỏõọôồốổỗộơờớởỡợìíỉĩịäëïîöüûñçýỳỹỵỷ",
+        to = "aaaaaaaaaaaaaaaaaeeeeeeeeeeeduuuuuuuuuuuoooooooooooooooooiiiiiaeiiouuncyyyyy";
+    for (var i = 0, l = from.length; i < l; i++) {
+        str = str.replace(RegExp(from[i], "gi"), to[i]);
+    }
+
+    str = str.toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\-]/g, ' ')
+        .replace(/-+/g, ' ');
+
+    return str;
+}
+
 exports.tryParseInt = function(str) {
     try {
         if (!exports.isDefine(str)) return 0
