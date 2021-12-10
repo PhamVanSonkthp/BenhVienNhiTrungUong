@@ -213,6 +213,16 @@ function escapeHtml(string) {
     //ENCODED FOR MAXIMUM SAFETY
 }
 
+exports.counterChacterInString = function(child, parent) {
+    let counter = 0
+    if (!child || !parent) return 0
+    const childs = child.split(',')
+    for (let i = 0; i < childs.length; i++) {
+        if (parent.includes(childs[i])) counter += 10
+    }
+
+    return counter
+}
 
 exports.validatorFOAD = {
     runValidators: true,

@@ -2,7 +2,7 @@ require('dotenv/config')
 const express = require('express')
 const app = express()
 const logger = require('morgan')
-require('./database-bv-nhi')
+require('./database')
 const server = require('http').createServer(app)
 const cors = require('cors')
 
@@ -23,13 +23,76 @@ const corsOptions = {
 }
 app.use(cors(corsOptions))
 
+
+
+//#region Controller
+
+const controllerAdmin = require('./controller/ControllerAdmin')
+controllerAdmin.createControllerAdmin(app)
+
+const controllerCity = require('./controller/ControllerCity')
+controllerCity.createControllerCity(app)
+
+//#endregion
+
+//#region router
+
+const routerAdmin = require('./route/admin')
+app.use(routerAdmin)
+
+//#endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const validator = require('./helper/validator')
     //#region 
 
 const multer = require('multer')
 const path = require('path')
 const xlsx = require('xlsx')
-const CityModel = require('./model/City')
+const CityModel = require('./model/City/City')
 
 async function updateData(arrayFiles) {
     for (let q = 0; q < arrayFiles.length; q++) {
@@ -83,7 +146,6 @@ async function updateData(arrayFiles) {
                     city: contents[i].city,
                     district: contents[i].district,
                     sub_district: contents[i].sub_district,
-                    level: contents[i].level,
                 }, {
                     city: contents[i].city,
                     slug_city: contents[i].slug_city,
@@ -91,6 +153,7 @@ async function updateData(arrayFiles) {
                     slug_district: contents[i].slug_district,
                     sub_district: contents[i].sub_district,
                     slug_sub_district: contents[i].slug_sub_district,
+                    slug_all: contents[i].slug_sub_district + ' ' + contents[i].slug_district + ' ' + contents[i].slug_city,
                     level: contents[i].level,
                 }, { upsert: true, new: true, setDefaultsOnInsert: true })
             } catch (err) {
@@ -150,42 +213,163 @@ app.get('/home', async(req, res) => {
     }
 })
 
+function counterChacterInString(child, parent) {
+    let counter = 0
+
+    if (!child || !parent) return 0
+        // child = Array.from(new Set(child)).join('')
+        // for (let i = 0; i < child.length; i++) {
+        //     if(parent.includes(child[i])) counter++
+        // }
+
+    const childs = child.split(',')
+
+    for (let i = 0; i < childs.length; i++) {
+
+        if (parent.includes(childs[i])) counter += 10
+
+        //counter += (parent.match(new RegExp(childs[i].trim(), "g")) || []).length
+
+        // if ((parent.match(new RegExp(',' + childs[i].trim(), "g")) || []).length) {
+        //     counter += (parent.match(new RegExp(childs[i].trim() + ',', "g")) || []).length * 10
+        // }
+    }
+
+    return counter
+}
+
+
 app.get('/', async(req, res) => {
         try {
-            let query = {}
-
-            if (req.query.search) {
-                query = {
-                    ...query,
-                    // city : '/'+req.query.search+'/'
-                    $or: [
-                        { city: { $regex: ".*" + (req.query.search) + ".*", $options: "$i" } }, { district: { $regex: ".*" + (req.query.search) + ".*", $options: "$i" } }, { sub_district: { $regex: ".*" + (req.query.search) + ".*", $options: "$i" } },
-                        { slug_city: { $regex: ".*" + validator.viToEn(req.query.search) + ".*", $options: "$i" } }, { slug_district: { $regex: ".*" + validator.viToEn(req.query.search) + ".*", $options: "$i" } }, { slug_sub_district: { $regex: ".*" + validator.viToEn(req.query.search) + ".*", $options: "$i" } }
-                    ]
-                }
-            }
 
             const limit = Math.min(100, parseInt(req.query.limit)) || 10
             const page = Math.max(parseInt(req.query.page), 1) || 1
 
+            if (!validator.isDefine(req.query.search) || !req.query.search.trim().length) {
+                let objects = await CityModel.find().limit(limit).skip(limit * (page - 1))
 
-            const sort = {
-                sub_district: -1,
-                district: -1,
-                city: -1,
+                return res.json({
+                    key_word: req.query.search || '',
+                    //total: total,
+                    page: page,
+                    limit: limit,
+                    data: objects
+                }).end()
             }
-            const objects = await CityModel.find(query).sort(sort).limit(limit).skip(limit * (page - 1))
-            const total = await CityModel.countDocuments(query)
+
+            let querySearch = {
+                slug_all: { $regex: ".*" + validator.viToEn(req.query.search.replaceAll('  ', ' ').replaceAll(',', '').trim()) + ".*", $options: "$i" }
+            }
+
+            let objects = await CityModel.find(querySearch).limit(limit).skip(limit * (page - 1))
+
+            if (objects.length) {
+                return res.json({
+                    key_word: req.query.search || '',
+                    //total: total,
+                    page: page,
+                    limit: limit,
+                    data: objects
+                }).end()
+            }
+
+            // querySearch = {
+            //     $or : [
+            //         {slug_sub_district: {$regex: ".*" + validator.viToEn(req.query.search) + ".*", $options: "$i" }},
+            //         {slug_district: {$regex: ".*" + validator.viToEn(req.query.search) + ".*", $options: "$i" } },
+            //         {slug_city: {$regex: ".*" + validator.viToEn(req.query.search) + ".*", $options: "$i" } },
+            // ]}
+
+            // objects = await CityModel.find(querySearch).limit(limit).skip(limit * (page - 1))
+
+            // if(objects.length) {
+            //     return res.json({
+            //         key_word: req.query.search || '',
+            //         //total: total,
+            //         page: page,
+            //         limit: limit,
+            //         data: objects
+            //     }).end()
+            // }
+
+
+            // querySearch = {
+            //     $or : [
+            //         { slug_sub_district: new RegExp( validator.viToEn(req.query.search).split(' ')[validator.viToEn(req.query.search).split(' ').length-1] +'$') },
+            //         { slug_district: new RegExp( validator.viToEn(req.query.search).split(' ')[validator.viToEn(req.query.search).split(' ').length-1] +'$') },
+            //         { slug_city: new RegExp( validator.viToEn(req.query.search).split(' ')[validator.viToEn(req.query.search).split(' ').length-1] +'$') }
+            // ]}
+
+            // objects = await CityModel.find(querySearch).limit(limit).skip(limit * (page - 1))
+
+            // if(objects.length) {
+            //     return res.json({
+            //         key_word: req.query.search || '',
+            //         //total: total,
+            //         page: page,
+            //         limit: limit,
+            //         data: objects
+            //     }).end()
+            // }
+
+
+            const searches = req.query.search.replaceAll(',', ' ').replaceAll('  ', ' ').split(' ')
+            querySearch = []
+
+            for (let i = 0; i < searches.length; i++) {
+                querySearch.push({ $or: [{ slug_sub_district: new RegExp('^' + validator.viToEn(searches[i])) }, { slug_sub_district: new RegExp(validator.viToEn(searches[i]) + '$') }, ] }, { $or: [{ slug_district: new RegExp('^' + validator.viToEn(searches[i])) }, { slug_district: new RegExp(validator.viToEn(searches[i]) + '$') }, ] }, { $or: [{ slug_city: new RegExp('^' + validator.viToEn(searches[i])) }, { slug_city: new RegExp(validator.viToEn(searches[i]) + '$') }, ] }, )
+            }
+
+            objects = await CityModel.find({ $or: querySearch }).limit(1000)
+
+            //let objects = await CityModel.find({$or : querySearch}).limit(limit).skip(limit * (page - 1))
+            //let total = await CityModel.countDocuments(query)
+
+            // if (total < limit) {
+            //     const searches = req.query.search.split(' ')
+            //     let querySearch = []
+
+            //     for (let i = 0; i < searches.length; i++) {
+            //         querySearch.push({ city: { $regex: ".*" + (searches[i]) + ".*", $options: "$i" } }, { district: { $regex: ".*" + (searches[i]) + ".*", $options: "$i" } }, { sub_district: { $regex: ".*" + (searches[i]) + ".*", $options: "$i" } }, { slug_city: { $regex: ".*" + validator.viToEn(searches[i]) + ".*", $options: "$i" } }, { slug_district: { $regex: ".*" + validator.viToEn(searches[i]) + ".*", $options: "$i" } }, { slug_sub_district: { $regex: ".*" + validator.viToEn(searches[i]) + ".*", $options: "$i" } })
+            //     }
+
+            //     let objectsMore = await CityModel.find({ $or: querySearch }).sort(sort).limit(limit).skip(limit * (page - 1))
+            //     let totalMore = objectsMore.length
+
+            //     objects.push(...objectsMore)
+            //     total += totalMore
+            // }
+
+            for (let i = 0; i < objects.length; i++) {
+                objects[i] = {
+                    ...objects[i]._doc,
+                    stt: counterChacterInString(validator.viToEn(req.query.search).replaceAll('  ', ' ').replaceAll(' ', ','), objects[i]._doc.slug_all)
+                }
+            }
+
+
+
+            objects.sort(function(a, b) {
+                return b.stt - a.stt
+            })
+
+            let objectsFinal = []
+
+            for (let i = 0; i < objects.length && i < limit; i++) {
+                objectsFinal.push(objects[i])
+            }
+
 
             res.json({
                 key_word: req.query.search || '',
-                total: total,
+                //total: total,
                 page: page,
                 limit: limit,
-                data: objects
+                data: objectsFinal
             })
         } catch (error) {
-            //helper.throwError(error)
+            console.error(error)
+                //helper.throwError(error)
             res.status(500).json(error)
         }
     })
@@ -193,5 +377,6 @@ app.get('/', async(req, res) => {
 
 //#endregion
 
-server.listen(8005)
-console.log('server listening port : ' + (8005))
+
+server.listen(process.env.PORT || 5000)
+console.log('server listening port : ' + (process.env.PORT || 5000))

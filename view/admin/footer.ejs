@@ -1,0 +1,35 @@
+<script src="./../../public/javascripts/app.js"></script>
+
+<link href="./../../public/stylesheets/imageuploadify.min.css" rel="stylesheet">
+<script src="./../../public/javascripts/imageuploadify.min.js"></script>
+<script src="./../../public/javascripts/imageuploadify.js"></script>
+
+<script>
+    $('input[name="avatar"]').imageuploadify();
+    $("input").attr("autocomplete", "off");
+</script>
+
+<script src="./../../public/javascripts/jquery.masknumber.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.number').maskNumber({
+            integer: true
+        });
+    });
+</script>
+
+<link href="./../public/vendor/select2/css/select2.css" rel="stylesheet">
+<script src="./../public/vendor/select2/js/select2.js">
+</script>
+
+<script>
+    $('select').select2({
+        width: '100%',
+        placeholder: "Empty",
+        allowClear: true
+    });
+    $('.select2-selection').css('border', 'none');
+</script>
+</body>
+
+</html>

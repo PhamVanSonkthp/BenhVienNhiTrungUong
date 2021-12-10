@@ -98,8 +98,8 @@ function setCookie(name, value, days) {
 }
 
 function logout() {
-    removeCookie('_id');
-    window.location.replace("sign-in");
+    removeCookie('token');
+    window.location.replace("./../../admin/sign-in");
 }
 
 function reloadScriptApp() {
@@ -275,8 +275,14 @@ function CopyToClipboard(containerid) {
     }
 }
 
+function changeOffset(page) {
+    page += 1
+    let url = window.location.href.split('?')[0] + '?q=' + $('#input_keyword').val() + '&page=' + page + '&level=' + (urlParams.get('level') || 1)
+    window.location.href = url
+}
+
 function paginator(data) {
-    var pagePatigation = '<div class="row dataTables_wrapper" style="float:right;">';
+    var pagePatigation = '<div class="row dataTables_wrapper" style="float:right;padding-bottom: 25px;">';
     //page += '<div class="col-sm-12 col-md-5"><div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Đang hiển thị ' + stt + ' -> ' + (stt + data.result - 1) + ' của ' + (parseInt(data.count)) + ' </div></div>';
     pagePatigation += '<div class="col-sm-12 col-md-7"><div style="margin-top:10px;" class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">';
     pagePatigation += '<ul class="pagination">';
@@ -295,23 +301,23 @@ function paginator(data) {
         if (count >= 2 && i == 0) // nếu có 2 trang trở lên thì sẽ có previous
         {
             if (offset != 0) // nếu offset khác 0 thì previous sẽ có thể click đc
-                pagePatigation += '<li onclick="changeOffset(' + (i) + ')" class="paginate_button page-item previous" id="dataTable_previous"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Trước</a></li>';
+                pagePatigation += '<li onclick="changeOffset(' + (i) + ')" class="paginate_button page-item previous" id="dataTable_previous"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">đầu</a></li>';
             else //nếu  offset == 0 previous sẽ ko thể click đc
-                pagePatigation += '<li class="paginate_button page-item previous disabled" id="dataTable_previous"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Trước</a></li>';
+                pagePatigation += '<li class="paginate_button page-item previous disabled" id="dataTable_previous"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">đầu</a></li>';
         }
 
         if (i == (parseInt((offset / limit)))) // nếu i nào bằng điều kiện trong if thì sẽ sáng màu xanh và ngược lại
         {
             pagePatigation += '<li onclick="changeOffset(' + i + ')" class="paginate_button page-item active"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">' + (i + 1) + '</a></li>';
             if (i == count - 1 && count >= 3) {
-                pagePatigation += '<li class="paginate_button page-item next disabled" id="dataTable_next"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Sau</a></li>';
+                pagePatigation += '<li class="paginate_button page-item next disabled" id="dataTable_next"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">cuối</a></li>';
             }
         } else {
             if (i <= 2 || i == count - 1) // hiện 5 trang đầu vaf trang cuối
             {
                 pagePatigation += '<li  onclick="changeOffset(' + i + ')" class="paginate_button page-item"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">' + (i + 1) + '</a></li>';
                 if (i == count - 1) {
-                    pagePatigation += '<li  onclick="changeOffset(' + (i) + ')" class="paginate_button page-item next" id="dataTable_next"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Sau</a></li>';
+                    pagePatigation += '<li  onclick="changeOffset(' + (i) + ')" class="paginate_button page-item next" id="dataTable_next"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">cuối</a></li>';
                 }
             } else {
                 if (i >= isShow - 1 && i <= isShow + 1) {
@@ -328,4 +334,5 @@ function paginator(data) {
     pagePatigation += '</ul></div></div></div>';
 
     $("#pagePatigation").html(pagePatigation);
+    $("#spn_loading").hide()
 }
