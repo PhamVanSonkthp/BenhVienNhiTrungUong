@@ -1,0 +1,74 @@
+<%- include("header", {tab: "home" , title: "Trang chủ" }); %>
+
+    <style>
+        .imageuploadify {
+            max-width: 100% !important;
+        }
+    </style>
+    <div class="text-center">
+        Thả các file excel sau khi tải ở trang: <a target="_blank" style="text-decoration: revert;color: blue;" href="https://capdodich.yte.gov.vn/map">capdodich.yte.gov.vn</a> (63 tỉnh thành tương ứng với 63 file excel)
+    </div>
+
+    <form class="mt-5" id="form_upload" enctype="multipart/form-data" method="post">
+        <input autocomplete="off" type="file" name="avatar" accept="*" multiple>
+    </form>
+
+    <div class="text-center mt-5">
+        <button type="button" class="btn btn-success" onclick="save()">Sau khi thả file, nhấn vào đây để cập nhật cấp độ dịch</button>
+    </div>
+
+
+    <script>
+        function save() {
+            $('#loading').show()
+            var files = $('input[name=avatar]')[0].files
+
+            if (!files.length) {
+                alert('Chưa chọn file')
+                return
+            }
+
+            showLoading()
+
+            $('#form_upload').unbind()
+
+            $('#form_upload').on('submit', (function(e) {
+                e.preventDefault()
+                var formData = new FormData(this)
+                formData.append('avatar', files)
+                $.ajax({
+                    type: 'POST',
+                    url: './../api/city/information/update-zone',
+                    headers: {
+                        //'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                        'token': getCookie('token')
+                    },
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        hideLoading()
+                        alert('Đã cập nhật cấp độ dịch!')
+                    },
+                    error: function(data) {
+                        hideLoading()
+                        alert(data.responseText)
+                    }
+                })
+            }))
+
+            $('#form_upload').submit()
+        }
+    </script>
+
+    <!-- END: Content -->
+
+    </div>
+    <!-- BEGIN: SCRIPT -->
+
+    <script>
+        $('#draw_3').addClass('side-menu--active')
+    </script>
+    <!-- END: SCRIPT -->
+    <%- include("footer"); %>

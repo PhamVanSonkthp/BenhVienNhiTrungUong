@@ -68,15 +68,21 @@ module.exports = function(app) {
             try {
                 const query = {
                     _id: helper.sanitize(req.body._caller._id),
+                    password: helper.sanitize(req.body.old_password),
                 }
 
                 let objForUpdate = {}
-                objForUpdate.password = helper.sanitize(req.body.password)
+                objForUpdate.password = helper.sanitize(req.body.new_password)
 
                 objForUpdate = { $set: objForUpdate }
 
                 const object = await ObjectModel.findOneAndUpdate(query, objForUpdate)
-                res.json(object)
+                if (object) {
+                    res.json(object)
+                } else {
+                    res.status(400).send('Mật khẩu cũ không chính xác')
+                }
+
             } catch (error) {
                 helper.throwError(error)
                 res.status(500).json(error)

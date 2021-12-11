@@ -767,16 +767,22 @@
             <a id="mobile-menu-toggler"> <i data-feather="bar-chart-2" class="w-8 h-8 text-white transform -rotate-90"></i> </a>
         </div>
         <ul class="border-t border-theme-29 py-5 hidden">
-            <li>
+            <!-- <li>
                 <a href="../admin/home" class="menu menu--active">
                     <div class="menu__icon"> <i data-feather="home"></i> </div>
                     <div class="menu__title"> Dashboard</div>
                 </a>
-            </li>
+            </li> -->
             <li>
                 <a href="../admin/city-level" class="menu menu--active">
-                    <div class="menu__icon"> <i data-feather="user"></i> </div>
+                    <div class="menu__icon"> <i data-feather="bar-chart"></i> </div>
                     <div class="menu__title"> Cấp độ dịch</div>
+                </a>
+            </li>
+            <li>
+                <a href="../admin/update-city-level" class="menu menu--active">
+                    <div class="menu__icon"> <i data-feather="edit"></i> </div>
+                    <div class="menu__title"> Cập nhật cấp độ dịch</div>
                 </a>
             </li>
 
@@ -863,20 +869,29 @@
             </a>
             <div class="side-nav__devider my-6"></div>
             <ul>
-                <li>
+                <!-- <li>
                     <a id="draw_1" href="../admin/dashboard" class="side-menu">
                         <div class="side-menu__icon"> <i data-feather="home"></i> </div>
                         <div class="side-menu__title">
                             Dashboard
                         </div>
                     </a>
-                </li>
+                </li> -->
 
                 <li>
                     <a id="draw_2" href="../admin/city-level" class="side-menu">
-                        <div class="side-menu__icon"> <i data-feather="user"></i> </div>
+                        <div class="side-menu__icon"> <i data-feather="bar-chart"></i> </div>
                         <div class="side-menu__title">
                             Cấp độ dịch
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a id="draw_3" href="../admin/update-city-level" class="side-menu">
+                        <div class="side-menu__icon"> <i data-feather="edit"></i> </div>
+                        <div class="side-menu__title">
+                            Cập nhật cấp độ dịch
                         </div>
                     </a>
                 </li>
@@ -980,18 +995,44 @@
                 } else {
                     showLoading();
                     toggleModalChangePassword();
-                    socket.emit('change-password-admin', {
-                        _id: getCookie('_id'),
-                        password: getCookie('password'),
-                        old_password: sha512($('#EdtOldPassword').val()),
-                        new_password: sha512($('#EdtNewPassword').val())
-                    }, (response) => {
-                        hideLoading();
-                        if (response == null) {
-                            $('#LblError').text('Old password invalid');
-                            toggleModalChangePassword();
+
+
+                    $.ajax({
+                        type: 'PUT',
+                        url: './../api/admin/authorization/password',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                            'token': getCookie('token')
+                        },
+                        cache: false,
+                        data: {
+                            old_password: sha512($('#EdtOldPassword').val()),
+                            new_password: sha512($('#EdtNewPassword').val())
+                        },
+                        success: function(response) {
+                            hideLoading()
+                            setCookie('token', response.accessToken)
+                        },
+                        error: function(data) {
+                            hideLoading()
+                            toggleModalChangePassword()
+                            $('#lbl_title_error').show()
                         }
-                    });
+                    })
+
+
+                    // socket.emit('change-password-admin', {
+                    //     _id: getCookie('_id'),
+                    //     password: getCookie('password'),
+                    //     old_password: sha512($('#EdtOldPassword').val()),
+                    //     new_password: sha512($('#EdtNewPassword').val())
+                    // }, (response) => {
+                    //     hideLoading();
+                    //     if (response == null) {
+                    //         $('#LblError').text('Old password invalid');
+                    //         toggleModalChangePassword();
+                    //     }
+                    // });
                 }
             }
         </script>

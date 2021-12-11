@@ -82,7 +82,7 @@
 
     <script>
         if (getCookie('token')) {
-            window.location.replace('./../admin/dashboard')
+            window.location.replace('./../admin/update-city-level')
         }
 
         $('#input_password').keypress(function(event) {
@@ -104,12 +104,11 @@
                 cache: false,
                 data: {
                     user_name: $('#input_user_name').val(),
-                    // password: sha512($('#input_password').val()),
-                    password: $('#input_password').val(),
+                    password: sha512($('#input_password').val()),
                 },
                 success: function(response) {
                     setCookie('token', response.accessToken)
-                    window.location.replace('./../admin/dashboard')
+                    window.location.replace('./../admin/update-city-level')
                 },
                 error: function(data) {
                     $('#lbl_title_error').show()
