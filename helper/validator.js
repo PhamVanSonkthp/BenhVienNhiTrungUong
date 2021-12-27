@@ -112,6 +112,7 @@ exports.tryParseFloat = function(str) {
 }
 
 exports.tryParseJson = function(str) {
+    if (!exports.isDefine(str)) return null
     try {
         if (isJson(str)) {
             try {
@@ -123,7 +124,7 @@ exports.tryParseJson = function(str) {
         return JSON.parse(str.toString())
     } catch (e) {
         helper.throwError(e)
-        return null;
+        return null
     }
 }
 
@@ -147,11 +148,12 @@ function isArray(val) {
     try {
         return Array.isArray(val)
     } catch (e) {
-        return false;
+        return false
     }
 }
 
 function isJsonString(str) {
+    str = str.toString()
     try {
         JSON.parse(str)
     } catch (e) {
@@ -161,19 +163,17 @@ function isJsonString(str) {
 }
 
 function setJson(json) {
-    if (isArray(json)) return json
-
-    if (isJsonString(json)) {
-        return exports.tryParseJson(json)
-    } else {
-        return null
-    }
+    return exports.tryParseJson(json)
 }
 
 function isJson(item) {
+
+    if (isArray(item)) return true
+
     item = typeof item !== "string" ?
         JSON.stringify(item) :
         item;
+
 
     try {
         item = JSON.parse(item);
@@ -266,7 +266,7 @@ exports.schemaDatetime = {
 
 exports.schemaUnique = {
     unique: true,
-    dropDups: true,
+    sparse: true,
 }
 
 exports.schemaPoint = {
@@ -290,17 +290,10 @@ exports.schemaJson = {
     trim: true,
     default: null,
     maxLength: 10000,
-    // set: setJson,
+    set: setJson,
 }
 
 exports.schemaAutoIndex = {
-    // autoIndex: true,
-    required: true,
     index: true,
-    // unique: true,
-    // dropDups: true,
-}
-
-exports.sortDES = {
-    _id: -1
+    sparse: true,
 }

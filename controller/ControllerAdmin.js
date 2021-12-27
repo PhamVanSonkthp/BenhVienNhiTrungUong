@@ -135,10 +135,22 @@ exports.update_city_level = async function(req, res) {
     res.render('admin/update-city-level')
 }
 
+exports.health_declaretion = async function(req, res) {
+    res.render('admin/health-declaretion')
+}
+
 exports.privacy = async function(req, res) {
     res.render('privacy')
 }
 
 exports.term_of_uses = async function(req, res) {
     res.render('term-of-uses')
+}
+
+exports.print_pcr = async function(req, res) {
+    res.render('admin/print-pcr')
+}
+
+exports.search_profile = async function(req, res) {
+    res.render('admin/search-profile')
 }

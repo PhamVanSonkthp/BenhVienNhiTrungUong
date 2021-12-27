@@ -43,6 +43,67 @@ function getTimeNow(timezone) {
     }
 }
 
+function formatDateFormProfileVI(date) {
+    if (isDefine(date) && date.length) {
+
+        let day = date.split(' ')[0]
+        let time = date.split(' ')[1].substring(0, 5) + '\''
+
+        return time + ' ngày ' + day
+    }
+
+    return ''
+}
+
+function formatDateFormProfileResultVI(date) {
+    if (isDefine(date) && date.length) {
+        return 'ngày ' + date.split(' ')[0].split('/')[0] + ' tháng ' + date.split(' ')[0].split('/')[1] + ' năm ' + date.split(' ')[0].split('/')[2]
+    }
+
+    return ''
+}
+
+function formatDateFormProfileResultEN(date) {
+    if (isDefine(date) && date.length) {
+        let day = new Date(date.split(' ')[0].split('/')[2] + '-' + date.split(' ')[0].split('/')[1] + '-' + date.split(' ')[0].split('/')[0]).toGMTString()
+        day = day.split(',')[1].trim().split(' ')[1] + ' ' + day.split(',')[1].trim().split(' ')[0] + '<sup>th</sup> ' + day.split(',')[1].trim().split(' ')[2]
+
+        return day
+    }
+
+    return ''
+}
+
+function formatDateFormProfileEN(date) {
+    if (isDefine(date) && date.length) {
+        let day = new Date(date.split(' ')[0].split('/')[2] + '-' + date.split(' ')[0].split('/')[1] + '-' + date.split(' ')[0].split('/')[0]).toGMTString()
+        let time = formatAMPM(new Date(date.split(' ')[0].split('/')[2] + '-' + date.split(' ')[0].split('/')[1] + '-' + date.split(' ')[0].split('/')[0] + ' ' + date.split(' ')[1]))
+
+        day = day.split(',')[1].trim().split(' ')[1] + ' ' + day.split(',')[1].trim().split(' ')[0] + '<sup>th</sup> ' + day.split(',')[1].trim().split(' ')[2]
+
+        if (time.length < 8) {
+            time = '0' + time
+        }
+        return time + ' - ' + day
+    }
+
+    return ''
+}
+
+function formatAMPM(date) {
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    hours %= 12;
+    hours = hours || 12;
+    minutes = minutes < 10 ? `0${minutes}` : minutes;
+
+    const strTime = `${hours}:${minutes} ${ampm}`;
+
+    return strTime;
+}
+
 function escapeHtml(string) {
     if (!isDefine(string)) return ''
         // if(string.includes('<script>') || true){

@@ -1,0 +1,255 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="./../../../../../../public/javascripts/qrcode.min.js"></script>
+</head>
+
+<body>
+    <div style="width: 210mm;padding: 15mm;height:265mm;position: relative;">
+        <div>
+
+            <div style="display: flex;gap: 10px;">
+                <div style="flex: 1;">
+                    <div style="text-align: center;">
+                        SỞ Y TẾ BÁC GIANG
+                    </div>
+                    <div style="font-style: italic;text-align: center;">
+                        (Bac Giang Department of Health)
+                    </div>
+
+                    <div style="text-align: center;font-weight: bold;">
+                        PHÒNG XÉT NGHIỆM AN BÌNH
+                    </div>
+                    <div style="font-style: italic;text-align: center;">
+                        (An Binh Molecular Biology Lab)
+                    </div>
+
+                    <div style="border-bottom: 1px solid black;width: 50%;float: right;margin-bottom: 2mm;padding-bottom: 2mm;">
+
+                    </div>
+
+                </div>
+
+                <div style="flex: 1;">
+                    <div style="text-align: center;font-weight: bold;">
+                        CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+                    </div>
+                    <div style="font-style: italic;text-align: center;">
+                        (Socialist Republic of Vietnam)
+                    </div>
+
+                    <div style="text-align: center;font-weight: bold;">
+                        Độc lập - Tự do - Hạnh phúc
+                    </div>
+                    <div style="font-style: italic;text-align: center;">
+                        (Independence - Liberty - Happiness)
+                    </div>
+
+                    <div style="border-bottom: 1px solid black;width: 50%;float: right;margin-bottom: 2mm;padding-bottom: 2mm;">
+
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex;gap: 10px;">
+                <div style="flex: 1;">
+                    <img style="width: 100%;" id="imgIcon" src="./../public/images/logo-byt.png">
+                </div>
+
+                <div style="flex: 5;justify-content: center;flex: 5;display: flex;align-items: center;flex-direction: column;">
+
+                    <div style="font-weight: bold;font-size: 21px;line-height: 21px;text-align: center;margin-top: 2mm;">
+                        PHIẾU TRẢ LỜI KẾT QUẢ XÉT NGHIỆM
+                    </div>
+
+                    <div style="font-weight: bold;font-size: 21px;line-height: 25px;text-align: center;">
+                        CERTIFICATE OF TESTING FOR SARS-COV-2
+                    </div>
+
+                </div>
+
+                <div style="flex: 1;">
+                    <div id="id_qrcode"></div>
+                </div>
+            </div>
+
+            <div style="margin-top: 7mm;">
+                <span>Họ và tên <span style="font-style: italic;">(Full name)</span>:</span><span style="font-weight: bold;margin-left: 2mm;"><%- object.name%></span>
+            </div>
+
+            <div style="margin-top: 2mm;">
+                <span>Giới <span style="font-style: italic;">(Gender)</span>:</span><span style="font-weight: bold;margin-left: 2mm;"><%- object.gender%></span> <span>(<%- (object.gender == 'Nam' ? 'Male' : 'Female')%>)</span>
+            </div>
+
+            <div style="display: flex;gap: 10px;margin-top: 2mm;">
+                <div style="flex: 1;">
+                    <span>Ngày sinh <span style="font-style: italic;">(Date of Birth)</span>:</span><span style="font-weight: bold;margin-left: 2mm;"><%- object.date_of_birth%></span>
+                </div>
+
+                <div style="flex: 1;">
+                    <span>Quốc tịch <span style="font-style: italic;">(Nationality)</span>:</span><span style="font-weight: bold;margin-left: 2mm;">Việt Nam</span>
+                </div>
+            </div>
+
+            <div style="display: flex;gap: 10px;margin-top: 2mm;">
+                <div style="flex: 1;">
+                    <span>Điện thoại <span style="font-style: italic;">(Phone)</span>:</span><span style="font-weight: bold;margin-left: 2mm;"><%- object.phone%></span>
+                </div>
+
+                <div style="flex: 1;">
+                    <span>Số hộ chiếu <span style="font-style: italic;">(Passport)</span>:</span><span style="font-weight: bold;margin-left: 2mm;"><%- object.identity%></span>
+                </div>
+            </div>
+
+
+            <div style="display: flex;margin-top: 2mm;">
+                <span>Địa chỉ <span style="font-style: italic;">(Address)</span>:</span>
+                <div>
+                    <div style="font-weight: bold;margin-left: 2mm;">
+                        <%- object.address%>,
+                            <%- object.sub_district%>,
+                                <%- object.district%>,
+                                    <%- object.city%>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 2mm;">
+                <span>Đơn vị lấy mẫu <span style="font-style: italic;">(Specimen Collected By)</span>:</span><span style="font-weight: bold;margin-left: 2mm;">Bệnh viện đa khoa Tân Dân (Tandan General Hospital)</span>
+            </div>
+
+            <div style="margin-top: 5mm;">
+                &emsp;&emsp;Chứng thực các kết quả sau đây đã được xác nhận bằng việc tiến hành xét nghiệm Covid-19 với mẫu lấy từ người nêu trên.
+            </div>
+
+            <div style="margin-top: 2mm;">
+                &emsp;&emsp;(This is to certify the following results which have been confirmed by testing for COVID-19 conducted with the sample taken from the above-mentionned person).
+            </div>
+
+            <table style="width: 100%;margin-top: 5mm;border-collapse: collapse;">
+                <tbody>
+                    <tr style="text-align: center;">
+                        <td style="border: 1px solid black;margin: 0;">Bệnh phẩm thu thập<br>(Type of sample)</td>
+                        <td style="border: 1px solid black;margin: 0;">Lần lấy mẫu<br>(No of Collection)</td>
+                        <td style="border: 1px solid rgb(31, 28, 28);margin: 0;">Ngày/ giờ lấy mẫu<br>(Date/time of Collection)</td>
+                        <td style="border: 1px solid black;margin: 0;">Tình trạnh mẫu sau khi nhận<br>(Sample Status)</td>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <td style="border: 1px solid black;margin: 0;">Dịch tỵ hầu<br>(Nasopharyngeal Swab)</td>
+                        <td style="border: 1px solid black;margin: 0;">01</td>
+                        <td style="border: 1px solid black;margin: 0;">
+                            <%- object.date_collection.split(' ')[1]%><br>
+                                <%- object.date_collection.split(' ')[0]%>
+                        </td>
+                        <td style="border: 1px solid black;margin: 0;"><span style="font-weight: bold;">Đạt</span><br>(Qualified)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-top: 5mm;">
+                <span style="font-weight: bold;">Kết quả xét nghiệm</span> <span style="font-style: italic;">(Lab Result)</span>:
+            </div>
+            <table style="width: 100%;margin-top: 2mm;border-collapse: collapse;">
+                <tbody>
+                    <tr style="text-align: center;">
+                        <td style="border: 1px solid black;margin: 0;">Mã bệnh phẩm xét nghiệm<br>(Sample ID)</td>
+                        <td style="border: 1px solid black;margin: 0;">Kỹ thuật xét nghiệm<br>(Method)</td>
+                        <td style="border: 1px solid black;margin: 0;">Lần xét nghiệm<br>(Nº of testing)</td>
+                        <td style="border: 1px solid black;margin: 0;">Ngày thực hiện<br>(Date of testing)</td>
+                        <td style="border: 1px solid black;margin: 0;">Kết quả<br>(Result)</td>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <td style="border: 1px solid black;margin: 0;">
+                            <%- object.barcode%>
+                        </td>
+                        <td style="border: 1px solid black;margin: 0;">Realtime RT-PCR</td>
+                        <td style="border: 1px solid black;margin: 0;">01</td>
+                        <td style="border: 1px solid black;margin: 0;">
+                            <%- object.date_testing%>
+                        </td>
+                        <td style="border: 1px solid black;margin: 0;"><span style="font-weight: bold;">Âm tính</span><br><span style="font-style: italic;">(Negative)</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-top: 5mm;">
+                <span style="font-weight: bold;">Kết luận</span> <span style="font-style: italic;">(Conclusion)</span>:<span style="font-weight: bold;margin-left: 2mm;">Âm tính</span><span style="margin-left: 2mm;">(Negative to Virus Sars-CoV-2)
+                </div>
+
+                <div style="position: absolute; bottom:20mm;margin: auto;left: 0;right: 0;">
+
+                    <div style="margin-top: 2mm;display:flex">
+                        <div style="text-align: center;flex: 1;">
+                            <div>
+                                Ngày/giờ trả kết quả: 17h00' ngày <%- object.date_testing%>
+                            </div>
+                            <div>
+                                Result Date: 17-00 PM - <%- object.date_testing%>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center;flex: 1;">
+                            <div>
+                                Bắc Giang, ngày 28 tháng 10 năm 2021
+                            </div>
+                            <div>
+                                Bac Giang, Oct - 28th 2021
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div style="display:flex;margin-top: 3mm;">
+                        <div style="text-align: center;flex: 1;">
+                            <div style="font-weight: bold;">
+                                Kỹ thuật xét nghiệm
+                            </div>
+                            <div>
+                                (Testing Technician)
+                            </div>
+                        </div>
+    
+                        <div style="text-align: center;flex: 1;">
+                            <div style="font-weight: bold;">
+                                Lãnh đạo đơn vị
+                            </div>
+                            <div>
+                                (Head of Hospital)
+                            </div>
+                        </div>
+    
+                    </div>
+    
+                    <div style="margin-top: 20mm;display:flex">
+                        <div style="text-align: center;flex: 1;">
+                            <div style="font-weight: bold;">
+                                CNXN, Nguyễn Thị Thủy
+                            </div>
+                        </div>
+    
+                        <div style="text-align: center;flex: 1;">
+                            <div style="font-weight: bold;">
+                                PGĐ, Nguyễn Đức Thắng
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+
+            </div>
+            <div style="page-break-inside:avoid;page-break-after:always"></div>
+        </div>
+
+        <script>
+            new QRCode("id_qrcode", {
+                text: 'https://covid.nch.gov.vn/profile/' + '<%- object.barcode%>_<%- object.phone%>',
+                width: document.getElementById("id_qrcode").offsetWidth,
+                height: document.getElementById("id_qrcode").offsetWidth,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        </script>
+
+    </body>
+</html>

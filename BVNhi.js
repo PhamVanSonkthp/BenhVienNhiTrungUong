@@ -31,12 +31,27 @@ controllerAdmin.createControllerAdmin(app)
 const controllerCity = require('./controller/ControllerCity')
 controllerCity.createControllerCity(app)
 
+const controllerMachine = require('./controller/ControllerMachine')
+controllerMachine.createControllerMachine(app)
+
+const controllerUser = require('./controller/ControllerUser')
+controllerUser.createControllerUser(app)
+
+const controllerHealthDeclaretion = require('./controller/ControllerHealthDeclaretion')
+controllerHealthDeclaretion.createControllerHealthDeclaretion(app)
+
+const controllerProfile = require('./controller/ControllerProfile')
+controllerProfile.createControllerProfile(app)
+
 //#endregion
 
 //#region router
 
 const routerAdmin = require('./route/admin')
 app.use(routerAdmin)
+
+const routerProfile = require('./route/profile')
+app.use(routerProfile)
 
 //#endregion
 

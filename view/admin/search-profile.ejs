@@ -1,0 +1,271 @@
+<%- include("header", {tab: "home" , title: "Trang chủ" }); %>
+    <div id="add-item-modal" class="modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        PROFILE
+                    </h5>
+
+                    <button style="position: absolute;right: 10px;top: 10px; height: auto !important;" onclick="toggleModalAddProduct()" type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="grid grid-cols-12">
+                        <div class="form-group col-span-12">
+                            <p>Hồ sơ:</p>
+                            <input id="input_level" class="form-control" type="number">
+                        </div>
+                        <div class="form-group col-span-12">
+                            <div class="form-group mt-2">
+                                <button type="button" onclick="updateLevelCity()" class="btn btn-sm btn-success p-3">Cập nhật</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5 modal-footer border-top-0 d-flex justify-content-between">
+                    <button onclick="toggleModalAddProduct()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="intro-y flex flex-col sm:flex-row items-center">
+        <h2 class="text-lg font-medium mr-auto">
+            Tra cứu
+        </h2>
+    </div>
+
+    <div class="intro-y box p-5 mt-5">
+        <div class="flex flex-col sm:flex-row sm:items-end xl:items-start">
+            <div id="tabulator-html-filter-form" class="xl:flex sm:mr-auto">
+                <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
+                    <input id="input_keyword" type="text" class="form-control sm:w-40 xxl:w-full mt-2 sm:mt-0" placeholder="Tìm kiếm...">
+                </div>
+                <div class="mt-2 xl:mt-0">
+                    <button id="tabulator-html-filter-go" type="button" class="btn btn-primary w-full sm:w-16" onclick="find()">Go</button>
+                </div>
+            </div>
+
+            <div class="flex mt-5 sm:mt-0" style="display: none;">
+                <div class="w-full sm:w-auto flex items-center sm:ml-auto float-right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter block mx-auto mr-2">
+                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                    </svg>
+                    <label for="show-example-1">Filter</label>
+                    <input data-target="#basic-table" class="show-code form-check-switch mr-0 ml-3" type="checkbox" id="show-example-1" onchange="onShowFilter()">
+                </div>
+            </div>
+        </div>
+
+        <div id="basic-table" class="mt-5 clear-both">
+
+            <div class="source-code grid grid-cols-12 gap-6" style="display: none; opacity: 1;">
+                <div class="col-span-12 xl:col-span-4 intro-y">
+                    <b>Cấp độ dịch</b>
+                    <div class="form-control">
+                        <select class="w-20 form-select box mt-3 sm:mt-0" id="select_filter_level">
+                            <option value="0">Mọi cấp độ</option>
+                            <option value="1">Cấp 1</option>
+                            <option value="2">Cấp 2</option>
+                            <option value="3">Cấp 3</option>
+                            <option value="4">Cấp 4</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="-intro-x box p-5 mt-12 sm:mt-5 clear-both" style="overflow-x: scroll;">
+            <table id="TblProduct" class="w-full table" cellspacing="0">
+                <thead class="tabulator-header">
+                    <tr>
+                        <th>Mã mẫu</th>
+                        <th>Họ và tên</th>
+                        <th>Số điện thoại</th>
+                        <th>Ngày lấy mẫu</th>
+                        <th>Kết quả</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="spn_loading" class="text-center">
+            <div class="col-span-6 sm:col-span-3 xl:col-span-2 flex flex-col justify-end items-center">
+
+                <svg width="25" viewBox="-2 -2 42 42" xmlns="http://www.w3.org/2000/svg" stroke="rgb(45, 55, 72)" class="w-8 h-8">
+                    <g fill="none" fill-rule="evenodd">
+                        <g transform="translate(1 1)" stroke-width="4">
+                            <circle stroke-opacity=".5" cx="18" cy="18" r="18"></circle>
+                            <path d="M36 18c0-9.94-8.06-18-18-18">
+                                <animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18"
+                                    dur="1s" repeatCount="indefinite"></animateTransform>
+                            </path>
+                        </g>
+                    </g>
+                </svg>
+
+                <div class="text-center text-xs mt-2">Đang tải</div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="pagePatigation" class="float-right">
+        <nav aria-label="Page navigation example">
+        </nav>
+    </div>
+    <!-- END: Content -->
+
+    </div>
+    <!-- BEGIN: SCRIPT -->
+
+    <script>
+        var cities
+
+        var limit
+        var page
+        var offset = page * limit
+        var isShow = 3
+        var stt = 0
+        var count
+
+        $('#input_keyword').val(urlParams.get('q'))
+        $.ajax({
+            type: 'GET',
+            url: '/api/profile/information?page=' + (urlParams.get('page') || 1) + '&q=' + urlParams.get('q') + '&level=' + urlParams.get('level'),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'token': getCookie('token')
+            },
+            cache: false,
+            success: function(response) {
+                cities = response.data
+                canvasTableCity(cities)
+                $('#lbl_loading').remove()
+
+                limit = response.limit
+                page = response.page
+                offset = (page - 1) * limit
+                isShow = 3
+                stt = 0
+                count = response.total
+
+                paginator(count)
+            },
+            error: function(data) {
+
+            }
+        })
+
+        function onShowFilter() {
+            if ($("#basic-table > div").hasClass("d-grid")) {
+                $('#basic-table > div').removeClass('d-grid')
+            } else {
+                $('#basic-table > div').addClass('d-grid')
+            }
+
+            $('#basic-table > div').attr("style", "display: block; opacity: 1;")
+        }
+
+        function canvasTableCity(data) {
+            $('#TblProduct tbody').empty();
+            $("#TblProduct tbody > tr").remove();
+            let myTable = document.getElementById('TblProduct').getElementsByTagName('tbody')[0];
+            let num = document.getElementById("TblProduct").rows.length;
+
+            for (let i = 0; i < data.length; i++) {
+                let row = myTable.insertRow();
+                if (i % 2 != 0) {
+                    row.style.backgroundColor = '#e2e8f0';
+
+                }
+                let cell1 = row.insertCell(0);
+                let cell2 = row.insertCell(1);
+                let cell3 = row.insertCell(2);
+                let cell4 = row.insertCell(3);
+                let cell5 = row.insertCell(4);
+                let cell6 = row.insertCell(5);
+
+                cell1.innerHTML = '<div class="ellipsis" style="max-width: 200px;">' + escapeHtml(data[i].barcode) + '</div>';
+                cell2.innerHTML = '<div class="ellipsis" style="max-width: 200px;">' + escapeHtml(data[i].name) + '</div>';
+                cell3.innerHTML = '<div class="ellipsis" style="max-width: 200px;">' + escapeHtml(data[i].phone) + '</div>';
+                cell4.innerHTML = '<div class="ellipsis" style="max-width: 200px;">' + escapeHtml(data[i].date_collection) + '</div>';
+                cell5.innerHTML = '<div class="ellipsis" style="max-width: 200px;">' + escapeHtml(data[i].result) + '</div>';
+                cell6.innerHTML = '<div class="tabulator-cell" role="gridcell" tabulator-field="actions" title="" style="text-align: right; display: inline-flex; align-items: center; justify-content: center;"> <div class="flex lg:justify-center items-center"> <a style="display:none;" onclick="editProduct(' + i + ')" class="edit flex items-center mr-3" href="javascript:;"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square w-4 h-4 mr-1"> <polyline points="9 11 12 14 22 4"></polyline> <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path> </svg> Edit </a> <a class="edit flex items-center mr-3" target="_blank" href="./../profile/' + data[i].barcode + '_' + data[i].phone + '"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square w-4 h-4 mr-1"> <polyline points="9 11 12 14 22 4"></polyline> <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path> </svg> View </a></div> <div class="tabulator-col-resize-handle"></div> <div class="tabulator-col-resize-handle prev"></div> </div> ';
+            }
+        }
+
+        function toggleModalAddProduct() {
+            $('#add-item-modal').css('display', 'block');
+            $('#add-item-modal').css('margin-top', '0px');
+            $('#add-item-modal').css('margin-left', '0px');
+            $('#add-item-modal').css('z-index', '1000');
+            if ($("#add-item-modal").hasClass("show")) {
+                $('#add-item-modal').removeClass('show');
+            } else {
+                $('#add-item-modal').addClass('show');
+                $('#add-item-modal').addClass('overflow-y-auto');
+            }
+        }
+
+
+        function updateLevelCity() {
+
+            $.ajax({
+                type: 'PUT',
+                url: '/api/city/information/' + cities[index_edit]._id,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    'token': getCookie('token')
+                },
+                data: {
+                    level: $('#input_level').val()
+                },
+                cache: false,
+                success: function(response) {
+                    cities[index_edit].level = $('#input_level').val()
+                    canvasTableCity(cities)
+                    toggleModalAddProduct()
+                },
+                error: function(data) {
+
+                }
+            })
+            cities[index_edit].level = $('#input_level').val()
+            canvasTableCity(cities)
+        }
+
+        function editProduct(i) {
+            index_edit = i;
+            $('#input_level').val(cities[i].level)
+            toggleModalAddProduct()
+        }
+
+        $('#input_keyword').keypress(function(event) {
+            if (event.keyCode == 13) {
+                find()
+            }
+        })
+
+        function find() {
+            window.location.replace('../admin/search-profile?page=1&q=' + $('#input_keyword').val() + '&level=' + (urlParams.get('level') || 1))
+        }
+
+        $('#select_filter_level').change(function() {
+            window.location.replace('../admin/search-profile?page=1&q=' + $('#input_keyword').val() + '&level=' + $(this).val())
+        })
+
+        $("#select_filter_level").val(urlParams.get('level') || 1);
+
+        $('#draw_6').addClass('side-menu--active')
+    </script>
+    <!-- END: SCRIPT -->
+    <%- include("footer"); %>
