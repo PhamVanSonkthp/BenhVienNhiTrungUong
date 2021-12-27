@@ -129,19 +129,19 @@
             <table style="width: 100%;margin-top: 5mm;border-collapse: collapse;">
                 <tbody>
                     <tr style="text-align: center;">
-                        <td style="border: 1px solid black;margin: 0;">Bệnh phẩm thu thập<br>(Type of sample)</td>
-                        <td style="border: 1px solid black;margin: 0;">Lần lấy mẫu<br>(No of Collection)</td>
-                        <td style="border: 1px solid rgb(31, 28, 28);margin: 0;">Ngày/ giờ lấy mẫu<br>(Date/time of Collection)</td>
-                        <td style="border: 1px solid black;margin: 0;">Tình trạnh mẫu sau khi nhận<br>(Sample Status)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Bệnh phẩm thu thập<br>(Type of sample)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Lần lấy mẫu<br>(No of Collection)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Ngày/ giờ lấy mẫu<br>(Date/time of Collection)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Tình trạnh mẫu sau khi nhận<br>(Sample Status)</td>
                     </tr>
                     <tr style="text-align: center;">
-                        <td style="border: 1px solid black;margin: 0;">Dịch tỵ hầu<br>(Nasopharyngeal Swab)</td>
-                        <td style="border: 1px solid black;margin: 0;">01</td>
-                        <td style="border: 1px solid black;margin: 0;">
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Dịch tỵ hầu<br>(Nasopharyngeal Swab)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">01</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">
                             <%- object.date_collection.split(' ')[1]%><br>
                                 <%- object.date_collection.split(' ')[0]%>
                         </td>
-                        <td style="border: 1px solid black;margin: 0;"><span style="font-weight: bold;">Đạt</span><br>(Qualified)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;"><span style="font-weight: bold;">Đạt</span><br>(Qualified)</td>
                     </tr>
                 </tbody>
             </table>
@@ -152,104 +152,110 @@
             <table style="width: 100%;margin-top: 2mm;border-collapse: collapse;">
                 <tbody>
                     <tr style="text-align: center;">
-                        <td style="border: 1px solid black;margin: 0;">Mã bệnh phẩm xét nghiệm<br>(Sample ID)</td>
-                        <td style="border: 1px solid black;margin: 0;">Kỹ thuật xét nghiệm<br>(Method)</td>
-                        <td style="border: 1px solid black;margin: 0;">Lần xét nghiệm<br>(Nº of testing)</td>
-                        <td style="border: 1px solid black;margin: 0;">Ngày thực hiện<br>(Date of testing)</td>
-                        <td style="border: 1px solid black;margin: 0;">Kết quả<br>(Result)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Mã bệnh phẩm xét nghiệm<br>(Sample ID)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Kỹ thuật xét nghiệm<br>(Method)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Lần xét nghiệm<br>(Nº of testing)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Ngày thực hiện<br>(Date of testing)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Kết quả<br>(Result)</td>
                     </tr>
                     <tr style="text-align: center;">
-                        <td style="border: 1px solid black;margin: 0;">
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">
                             <%- object.barcode%>
                         </td>
-                        <td style="border: 1px solid black;margin: 0;">Realtime RT-PCR</td>
-                        <td style="border: 1px solid black;margin: 0;">01</td>
-                        <td style="border: 1px solid black;margin: 0;">
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Realtime RT-PCR</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">01</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">
                             <%- object.date_testing%>
                         </td>
-                        <td style="border: 1px solid black;margin: 0;"><span style="font-weight: bold;">Âm tính</span><br><span style="font-style: italic;">(Negative)</span></td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;"><span style="font-weight: bold;">Âm tính</span><br><span style="font-style: italic;">(Negative)</span></td>
                     </tr>
                 </tbody>
             </table>
 
-            <div style="margin-top: 5mm;">
+            <div style="margin-top: 2mm;">
                 <span style="font-weight: bold;">Kết luận</span> <span style="font-style: italic;">(Conclusion)</span>:<span style="font-weight: bold;margin-left: 2mm;">Âm tính</span><span style="margin-left: 2mm;">(Negative to Virus Sars-CoV-2)
                 </div>
 
-                <div style="position: absolute; bottom:20mm;margin: auto;left: 0;right: 0;">
+                <div style="position: absolute; bottom:15mm;margin: auto;left: 0;right: 0;">
 
                     <div style="margin-top: 2mm;display:flex">
                         <div style="text-align: center;flex: 1;">
                             <div>
-                                Ngày/giờ trả kết quả: 17h00' ngày <%- object.date_testing%>
-                            </div>
-                            <div>
-                                Result Date: 17-00 PM - <%- object.date_testing%>
-                            </div>
-                        </div>
-
-                        <div style="text-align: center;flex: 1;">
-                            <div>
-                                Bắc Giang, ngày 28 tháng 10 năm 2021
-                            </div>
-                            <div>
-                                Bac Giang, Oct - 28th 2021
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div style="display:flex;margin-top: 3mm;">
-                        <div style="text-align: center;flex: 1;">
-                            <div style="font-weight: bold;">
-                                Kỹ thuật xét nghiệm
-                            </div>
-                            <div>
-                                (Testing Technician)
-                            </div>
-                        </div>
-    
-                        <div style="text-align: center;flex: 1;">
-                            <div style="font-weight: bold;">
-                                Lãnh đạo đơn vị
-                            </div>
-                            <div>
-                                (Head of Hospital)
-                            </div>
-                        </div>
-    
-                    </div>
-    
-                    <div style="margin-top: 20mm;display:flex">
-                        <div style="text-align: center;flex: 1;">
-                            <div style="font-weight: bold;">
-                                CNXN, Nguyễn Thị Thủy
-                            </div>
-                        </div>
-    
-                        <div style="text-align: center;flex: 1;">
-                            <div style="font-weight: bold;">
-                                PGĐ, Nguyễn Đức Thắng
-                            </div>
-                        </div>
-    
-                    </div>
-                </div>
-
+                                Ngày/giờ trả kết quả: 
+                                <span id="date_left_vi"></span>
             </div>
-            <div style="page-break-inside:avoid;page-break-after:always"></div>
+            <div>
+                Result Date: <span id="date_left_en"></span>
+            </div>
         </div>
 
-        <script>
-            new QRCode("id_qrcode", {
-                text: 'https://covid.nch.gov.vn/profile/' + '<%- object.barcode%>_<%- object.phone%>',
-                width: document.getElementById("id_qrcode").offsetWidth,
-                height: document.getElementById("id_qrcode").offsetWidth,
-                colorDark: "#000000",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H
-            });
-        </script>
+        <div style="text-align: center;flex: 1;">
+            <div>
+                Bắc Giang, <span id="date_right_vi"></span>
+            </div>
+            <div>
+                Bac Giang, <span id="date_right_en"></span>
+            </div>
+        </div>
 
-    </body>
+    </div>
+
+    <div style="display:flex;margin-top: 3mm;">
+        <div style="text-align: center;flex: 1;">
+            <div style="font-weight: bold;">
+                Kỹ thuật xét nghiệm
+            </div>
+            <div>
+                (Testing Technician)
+            </div>
+        </div>
+
+        <div style="text-align: center;flex: 1;">
+            <div style="font-weight: bold;">
+                Lãnh đạo đơn vị
+            </div>
+            <div>
+                (Head of Hospital)
+            </div>
+        </div>
+
+    </div>
+
+    <div style="margin-top: 30mm;display:flex">
+        <div style="text-align: center;flex: 1;">
+            <div style="font-weight: bold;">
+                CNXN, Nguyễn Thị Thủy
+            </div>
+        </div>
+
+        <div style="text-align: center;flex: 1;">
+            <div style="font-weight: bold;">
+                PGĐ, Nguyễn Đức Thắng
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+    </div>
+    <div style="page-break-inside:avoid;page-break-after:always"></div>
+    </div>
+
+    <script>
+        new QRCode("id_qrcode", {
+            text: 'https://covid.nch.gov.vn/profile/' + '<%- object.barcode%>_<%- object.phone%>',
+            width: document.getElementById("id_qrcode").offsetWidth,
+            height: document.getElementById("id_qrcode").offsetWidth,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        })
+        $('#date_left_vi').html(formatDateFormProfileVI('<%- object.date_testing%>'))
+        $('#date_left_en').html(formatDateFormProfileEN('<%- object.date_testing%>'))
+        $('#date_right_vi').html(formatDateFormProfileResultVI('<%- object.date_testing%>'))
+        $('#date_right_en').html(formatDateFormProfileResultEN('<%- object.date_testing%>'))
+    </script>
+
+</body>
+
 </html>
