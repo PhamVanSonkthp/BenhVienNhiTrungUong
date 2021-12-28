@@ -82,7 +82,7 @@
 
     <script>
         if (getCookie('token')) {
-            window.location.replace('./../admin/update-city-level')
+            window.location.replace('./../admin/print-pcr')
         }
 
         $('#input_password').keypress(function(event) {
@@ -108,7 +108,7 @@
                 },
                 success: function(response) {
                     setCookie('token', response.accessToken)
-                    window.location.replace('./../admin/update-city-level')
+                    window.location.replace('./../admin/print-pcr')
                 },
                 error: function(data) {
                     $('#lbl_title_error').show()

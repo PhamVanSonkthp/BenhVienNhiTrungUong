@@ -1,0 +1,284 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="./../../../../../../public/javascripts/qrcode.min.js"></script>
+    <script src="./../../public/javascripts/jquery.min.js"></script>
+    <script src="./../../public/javascripts/helper.js"></script>
+</head>
+
+<body style="font-size: 4.9mm;margin: 0;">
+
+    <% for(let i = 0 ; i < objects.length ; i++){ %>
+        <div style="width: 210mm;padding: 15mm;height:287mm;position: relative;">
+            <div>
+                <div style="display: flex;gap: 10px;">
+                    <div style="flex: 1;">
+                        <div style="text-align: center;">
+                            SỞ Y TẾ BÁC GIANG
+                        </div>
+                        <div style="font-style: italic;text-align: center;">
+                            (Bac Giang Department of Health)
+                        </div>
+
+                        <div style="text-align: center;font-weight: bold;">
+                            PHÒNG XÉT NGHIỆM AN BÌNH
+                        </div>
+                        <div style="font-style: italic;text-align: center;">
+                            (An Binh Molecular Biology Lab)
+                        </div>
+
+                        <div style="border-bottom: 1px solid black;margin-right: 30%;margin-left: 30%;margin-bottom: 2mm;padding-bottom: 2mm;">
+
+                        </div>
+
+                    </div>
+
+                    <div style="flex: 1;">
+                        <div style="text-align: center;font-weight: bold;">
+                            CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+                        </div>
+                        <div style="font-style: italic;text-align: center;">
+                            (Socialist Republic of Vietnam)
+                        </div>
+
+                        <div style="text-align: center;font-weight: bold;">
+                            Độc lập - Tự do - Hạnh phúc
+                        </div>
+                        <div style="font-style: italic;text-align: center;">
+                            (Independence - Liberty - Happiness)
+                        </div>
+
+                        <div style="border-bottom: 1px solid black;margin-right: 30%;margin-left: 30%;margin-bottom: 2mm;padding-bottom: 2mm;">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex;gap: 10px;">
+                    <div style="flex: 1;">
+                        <img style="width: 100%;" id="imgIcon" src="./../../../public/images/logo-byt.png">
+                    </div>
+
+                    <div style="flex: 5;justify-content: center;flex: 5;display: flex;align-items: center;flex-direction: column;">
+
+                        <div style="font-weight: bold;font-size: 7mm;;line-height: 21px;text-align: center;margin-top: 12mm;">
+                            PHIẾU TRẢ LỜI KẾT QUẢ XÉT NGHIỆM
+                        </div>
+
+                        <div style="font-size: 6.6mm;line-height: 25px;text-align: center;margin-top: 1mm;">
+                            CERTIFICATE OF TESTING FOR SARS-COV-2
+                        </div>
+
+                    </div>
+
+                    <div style="flex: 1;">
+                        <div id="id_qrcode<%- i%>"></div>
+                    </div>
+                </div>
+
+                <div style="margin-left: 9mm;margin-right: 9mm;">
+                    <div style="margin-top: 7mm;display: flex;gap: 10px;">
+                        <div style="flex: 1;">
+                            <span>Họ và tên <span style="font-style: italic;">(Full name)</span>:</span><span style="font-weight: bold;margin-left: 1mm;"><%- objects[i].name%></span>
+                        </div>
+
+                        <div style="flex: 1;">
+                            <span>Giới <span style="font-style: italic;">(Gender)</span>:</span><span style="margin-left: 1mm;"><%- objects[i].gender%>/</span><span style="font-style: italic;">(<%- (objects[i].gender == 'Nam' ? 'Male' : 'Female')%>)</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex;gap: 10px;margin-top: 2mm;">
+                        <div style="flex: 1;">
+                            <span>Ngày sinh <span style="font-style: italic;">(Date of Birth)</span>:</span><span style="font-weight: bold;margin-left: 1mm;"><%- objects[i].date_of_birth%></span>
+                        </div>
+
+                        <div style="flex: 1;">
+                            <span>Quốc tịch <span style="font-style: italic;">(Nationality)</span>:</span><span style="margin-left: 1mm;">Việt Nam</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex;gap: 10px;margin-top: 2mm;">
+                        <div style="flex: 1;">
+                            <span>Điện thoại <span style="font-style: italic;">(Phone)</span>:</span><span style="font-weight: bold;margin-left: 1mm;"><%- objects[i].phone%></span>
+                        </div>
+
+                        <div style="flex: 1;">
+                            <span>CCCD/Hộ chiếu <span style="font-style: italic;">(ID/Passport)</span>:</span><span style="margin-left: 1mm;"><%- objects[i].identity%></span>
+                        </div>
+                    </div>
+
+
+                    <div style="display: flex;margin-top: 2mm;">
+                        <span>Địa chỉ <span style="font-style: italic;">(Address)</span>:</span>
+                        <div>
+                            <div style="margin-left: 1mm;">
+                                <%- objects[i].address%>,
+                                    <%- objects[i].sub_district%>,
+                                        <%- objects[i].district%>,
+                                            <%- objects[i].city%>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2mm;">
+                        <span>Đơn vị lấy mẫu <span style="font-style: italic;">(Specimen Collected By)</span>:</span><span style="margin-left: 1mm;">Phòng xét nghiệm An Bình </span><span style="font-style: italic;">(An Binh Molecular Biology Lab)</span>
+                    </div>
+
+                    <div style="margin-top: 5mm;">
+                        &emsp;&emsp;Chứng thực các kết quả sau đây đã được xác nhận bằng việc tiến hành xét nghiệm Covid-19 với mẫu lấy từ người nêu trên.
+                    </div>
+
+                    <div style="margin-top: 2mm;">
+                        &emsp;&emsp;(This is to certify the following results which have been confirmed by testing for COVID-19 conducted with the sample taken from the above-mentionned person).
+                    </div>
+
+                    <table style="width: 100%;margin-top: 5mm;border-collapse: collapse;">
+                        <tbody>
+                            <tr style="text-align: center;">
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;">Bệnh phẩm thu thập<br>(Type of sample)</td>
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;">Lần lấy mẫu<br>(No of Collection)</td>
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;">Ngày/ giờ lấy mẫu<br>(Date/time of Collection)</td>
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;">Tình trạnh mẫu sau khi nhận<br>(Sample Status)</td>
+                            </tr>
+                            <tr style="text-align: center;">
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;">Dịch tỵ hầu<br>(Nasopharyngeal Swab)</td>
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;">01</td>
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;" id="time_date_collection<%- i%>"></td>
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;"><span style="font-weight: bold;">Đạt</span><br>(Qualified)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="margin-top: 5mm;">
+                        <span style="font-weight: bold;">Kết quả xét nghiệm</span> <span style="font-style: italic;">(Lab Result)</span>:
+                    </div>
+                    <table style="width: 100%;margin-top: 2mm;border-collapse: collapse;">
+                        <tbody>
+                            <tr style="text-align: center;">
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;">Mã bệnh phẩm xét nghiệm<br>(Sample ID)</td>
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;">Kỹ thuật xét nghiệm<br>(Method)</td>
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;">Lần xét nghiệm<br>(Nº of testing)</td>
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;">Ngày thực hiện<br>(Date of testing)</td>
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;">Kết quả<br>(Result)</td>
+                            </tr>
+                            <tr style="text-align: center;">
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;">
+                                    <%- objects[i].barcode%>
+                                </td>
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;">Realtime RT-PCR</td>
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;">01</td>
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;">
+                                    <%- objects[i].date_testing.split(' ')[0]%>
+                                </td>
+                                <td style="border: 1px solid black;margin: 0;padding: 2mm;"><span style="font-weight: bold;">Âm tính</span><br><span style="font-style: italic;">(Negative)</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="margin-top: 2mm;">
+                        <span style="font-weight: bold;">Kết luận</span> <span style="font-style: italic;">(Conclusion)</span>:<span style="font-weight: bold;margin-left: 1mm;">Âm tính</span><span style="margin-left: 1mm;">(Negative to Virus Sars-CoV-2) </span>
+                    </div>
+                </div>
+
+
+
+                <div style="position: absolute; bottom:15mm;margin: auto;left: 0;right: 0;">
+
+                    <div style="margin-top: 2mm;display:flex">
+                        <div style="text-align: center;flex: 1;">
+                            <div>
+                                Ngày/giờ trả kết quả:
+                                <span id="date_left_vi<%- i%>"></span>
+                            </div>
+                            <div>
+                                Result Date: <span id="date_left_en<%- i%>"></span>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center;flex: 1;">
+                            <div>
+                                Bắc Giang, <span id="date_right_vi<%- i%>"></span>
+                            </div>
+                            <div>
+                                Bac Giang, <span id="date_right_en<%- i%>"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div style="display:flex;margin-top: 3mm;">
+                        <div style="text-align: center;flex: 1;">
+                            <div style="font-weight: bold;">
+                                Kỹ thuật xét nghiệm
+                            </div>
+                            <div style="font-style: italic;">
+                                (Testing Technician)
+                            </div>
+                        </div>
+
+                        <div style="text-align: center;flex: 1;">
+                            <div style="font-weight: bold;">
+                                Lãnh đạo đơn vị
+                            </div>
+                            <div style="font-style: italic;">
+                                (Head of Laboratory)
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div style="margin-top: 35mm;display:flex">
+                        <div style="text-align: center;flex: 1;">
+                            <div style="font-weight: bold;">
+                                CNXN. Phạm Thị Nhuần
+                            </div>
+                        </div>
+
+                        <div style="text-align: center;flex: 1;">
+                            <div style="font-weight: bold;">
+                                Nguyễn Văn Lợi
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div style="page-break-inside:avoid;page-break-after:always"></div>
+        </div>
+        <%}%>
+
+
+
+            <script>
+                let objects = JSON.parse(`<%-JSON.stringify(objects) %>`)
+
+                for (let i = 0; i < objects.length; i++) {
+
+
+                    new QRCode("id_qrcode" + i, {
+                        text: 'https://tracuu.phongkhamdakhoaanbinh.vn/profile/' + objects.id,
+                        width: document.getElementById("id_qrcode" + i).offsetWidth,
+                        height: document.getElementById("id_qrcode" + i).offsetWidth,
+                        colorDark: "#000000",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.H
+                    })
+
+                    $('#date_left_vi' + i).html(formatDateFormProfileVI(objects[i].date_testing))
+                    $('#date_left_en' + i).html(formatDateFormProfileEN(objects[i].date_testing))
+                    $('#date_right_vi' + i).html(formatDateFormProfileResultVI(objects[i].date_testing))
+                    $('#date_right_en' + i).html(formatDateFormProfileResultEN(objects[i].date_testing))
+                    $('#time_date_collection' + i).html(getTimeAMPM(objects[i].date_collection) + '<br>' + objects[i].date_collection.split(' ')[0])
+                }
+
+                $(document).ready(function() {
+                    window.print()
+                });
+            </script>
+
+
+
+</body>
+
+</html>
