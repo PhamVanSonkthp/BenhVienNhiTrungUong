@@ -14,3 +14,12 @@ exports.profile = async function(req, res) {
         res.render('profile')
     }
 }
+
+exports.profile_mobile = async function(req, res) {
+    try {
+        const object = await ProfileModel.findOne({ id: req.params.objectId })
+        res.render('profile-mobile', { object: object })
+    } catch (err) {
+        res.render('profile-mobile')
+    }
+}

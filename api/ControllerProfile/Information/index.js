@@ -139,6 +139,7 @@ module.exports = function(app) {
 
                             results[i]._id = object._id
                             results[i].number_form = object.number_form
+                            results[i].id = object.id
                         } catch (err) {
                             validator.throwError(err)
                             return res.status(400).json(err)

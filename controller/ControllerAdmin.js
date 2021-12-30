@@ -1,6 +1,7 @@
 const authorization = require('../api/ControllerAdmin/Authorization')
 
 const AdminModel = require('../model/Admin/Admin')
+const ProfileModel = require('../model/Profile/Profile')
 const CityModel = require('../model/City/City')
 const validator = require('../helper/validator')
 
@@ -153,4 +154,17 @@ exports.print_pcr = async function(req, res) {
 
 exports.search_profile = async function(req, res) {
     res.render('admin/search-profile')
+}
+
+exports.profiles = async function(req, res) {
+
+
+    const objects = req.params.objects.split(',')
+
+    const results = []
+    for (let i = 0; i < objects.length; i++) {
+        const object = await ProfileModel.findOne({ id: objects[i] })
+        results.push(object)
+    }
+    res.render('admin/profiles', { objects: results })
 }

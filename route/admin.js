@@ -13,5 +13,6 @@ router.get('/admin/health-declaretion', controllerAdmin.health_declaretion)
 router.get('/privacy', controllerAdmin.privacy)
 router.get('/admin/print-pcr', controllerAdmin.print_pcr)
 router.get('/admin/search-profile', controllerAdmin.search_profile)
+router.get('/admin/profiles/:objects', controllerAdmin.profiles)
 
 module.exports = router

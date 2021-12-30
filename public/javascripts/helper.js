@@ -66,7 +66,7 @@ function formatDateFormProfileResultVI(date) {
 function formatDateFormProfileResultEN(date) {
     if (isDefine(date) && date.length) {
         let day = new Date(date.split(' ')[0].split('/')[2] + '-' + date.split(' ')[0].split('/')[1] + '-' + date.split(' ')[0].split('/')[0]).toGMTString()
-        day = day.split(',')[1].trim().split(' ')[1] + ' ' + day.split(',')[1].trim().split(' ')[0] + '<sup>th</sup> ' + day.split(',')[1].trim().split(' ')[2]
+        day = day.split(',')[1].trim().split(' ')[1] + ' - ' + day.split(',')[1].trim().split(' ')[0] + '<sup>th</sup> ' + day.split(',')[1].trim().split(' ')[2]
 
         return day
     }
@@ -77,9 +77,9 @@ function formatDateFormProfileResultEN(date) {
 function formatDateFormProfileEN(date) {
     if (isDefine(date) && date.length) {
         let day = new Date(date.split(' ')[0].split('/')[2] + '-' + date.split(' ')[0].split('/')[1] + '-' + date.split(' ')[0].split('/')[0]).toGMTString()
-        let time = formatAMPM(new Date(date.split(' ')[0].split('/')[2] + '-' + date.split(' ')[0].split('/')[1] + '-' + date.split(' ')[0].split('/')[0] + ' ' + date.split(' ')[1]))
+        let time = formatAMPM(new Date(date.split(' ')[0].split('/')[2] + '/' + date.split(' ')[0].split('/')[1] + '/' + date.split(' ')[0].split('/')[0] + ' ' + date.split(' ')[1]))
 
-        day = day.split(',')[1].trim().split(' ')[1] + ' ' + day.split(',')[1].trim().split(' ')[0] + '<sup>th</sup> ' + day.split(',')[1].trim().split(' ')[2]
+        day = day.split(',')[1].trim().split(' ')[1] + ' - ' + day.split(',')[1].trim().split(' ')[0] + '<sup>th</sup> ' + day.split(',')[1].trim().split(' ')[2]
 
         if (time.length < 8) {
             time = '0' + time
@@ -88,6 +88,19 @@ function formatDateFormProfileEN(date) {
     }
 
     return ''
+}
+
+function getTimeAMPM(date){
+
+    //return date.split(' ')[0].split('/')[2] + '-' + date.split(' ')[0].split('/')[1] + '-' + date.split(' ')[0].split('/')[0] + ' ' + date.split(' ')[1]
+    //return new Date(date.split(' ')[0].split('/')[2] + '-' + date.split(' ')[0].split('/')[1] + '-' + date.split(' ')[0].split('/')[0] + ' ' + date.split(' ')[1])
+
+    let time = formatAMPM(new Date(date.split(' ')[0].split('/')[2] + '/' + date.split(' ')[0].split('/')[1] + '/' + date.split(' ')[0].split('/')[0] + ' ' + date.split(' ')[1]))
+
+
+    if(time.length < 8) time  = '0' + time
+
+    return time
 }
 
 function formatAMPM(date) {
