@@ -1,76 +1,74 @@
-require('dotenv/config')
-const express = require('express')
+require("dotenv/config")
+const express = require("express")
 const app = express()
-const logger = require('morgan')
-require('./database')
-const server = require('http').createServer(app)
-const cors = require('cors')
+const logger = require("morgan")
+require("./database")
+const server = require("http").createServer(app)
+const cors = require("cors")
 
-app.set('views', './view')
-app.set('view engine', 'ejs')
+app.set("views", "./view")
+app.set("view engine", "ejs")
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-app.use(logger('dev'))
-app.use(express.static(__dirname + '/public'))
+app.use(logger("dev"))
+app.use(express.static(__dirname + "/public"))
 app.use(express.json({ limit: "50mb" }))
 app.use(express.urlencoded({ limit: "50mb", extended: false }))
 
 const corsOptions = {
-    origin: '*',
+    origin: "*",
     credentials: true,
     optionSuccessStatus: 200,
 }
 app.use(cors(corsOptions))
-const io = require('socket.io')(server, { cors: { origin: "*" } })
+const io = require("socket.io")(server, { cors: { origin: "*" } })
 
 //#region Controller
 
-const controllerAdmin = require('./controller/ControllerAdmin')
+const controllerAdmin = require("./controller/ControllerAdmin")
 controllerAdmin.createControllerAdmin(app)
 
-const controllerCity = require('./controller/ControllerCity')
+const controllerCity = require("./controller/ControllerCity")
 controllerCity.createControllerCity(app)
 
-const controllerMachine = require('./controller/ControllerMachine')
+const controllerMachine = require("./controller/ControllerMachine")
 controllerMachine.createControllerMachine(app)
 
-const controllerUser = require('./controller/ControllerUser')
+const controllerUser = require("./controller/ControllerUser")
 controllerUser.createControllerUser(app)
 
-const controllerHealthDeclaretion = require('./controller/ControllerHealthDeclaretion')
+const controllerHealthDeclaretion = require("./controller/ControllerHealthDeclaretion")
 controllerHealthDeclaretion.createControllerHealthDeclaretion(app)
 
-const controllerProfile = require('./controller/ControllerProfile')
+const controllerProfile = require("./controller/ControllerProfile")
 controllerProfile.createControllerProfile(app)
 
 //#endregion
 
 //#region router
 
-const routerAdmin = require('./route/admin')
+const routerAdmin = require("./route/admin")
 app.use(routerAdmin)
 
-const routerUser = require('./route/user')
+const routerUser = require("./route/user")
 app.use(routerUser)
 
-const routerProfile = require('./route/profile')
+const routerProfile = require("./route/profile")
 app.use(routerProfile)
 
 //#endregion
 
 server.listen(process.env.PORT || 5000)
-console.log('server listening port : ' + (process.env.PORT || 5000))
+console.log("server listening port : " + (process.env.PORT || 5000))
 
+const validator = require("./helper/validator")
+const CityModel = require("./model/City/City")
 
-const validator = require('./helper/validator')
-const CityModel = require('./model/City/City')
-
-io.sockets.on('connection', (socket) => {
-
+io.sockets.on("connection", (socket) => {
     //----------Start Admin Area---------//
 
-    socket.on('search', async(data, callback) => {
+    socket.on("search", async (data, callback) => {
         try {
             data = data.val
 
@@ -79,68 +77,75 @@ io.sockets.on('connection', (socket) => {
             const level = undefined
 
             if (!validator.isDefine(data) || !data.trim().length) {
-
                 let query = {}
                 if (validator.isDefine(level) && level) {
                     query = {
                         ...query,
-                        level: level
+                        level: level,
                     }
                 }
 
-                let objects = await CityModel.find(query).limit(limit).skip(limit * (page - 1))
+                let objects = await CityModel.find(query)
+                    .limit(limit)
+                    .skip(limit * (page - 1))
                 const total = await CityModel.countDocuments(query)
 
                 console.log(objects)
 
                 return callback({
-                    key_word: data || '',
+                    key_word: data || "",
                     total: total,
                     page: page,
                     limit: limit,
-                    data: objects
+                    data: objects,
                 })
             }
 
             let querySearch = {
-                slug_all: { $regex: ".*" + validator.viToEn(data.replaceAll('  ', ' ').replaceAll(',', '').trim()) + ".*", $options: "$i" }
+                slug_all: { $regex: ".*" + validator.viToEn(data.replace(/  /g, " ").replace(/,/g, "").trim()) + ".*", $options: "$i" },
             }
 
             if (validator.isDefine(level) && level) {
                 querySearch = {
                     ...querySearch,
-                    level: level
+                    level: level,
                 }
             }
 
-            let objects = await CityModel.find(querySearch).limit(limit).skip(limit * (page - 1))
+            let objects = await CityModel.find(querySearch)
+                .limit(limit)
+                .skip(limit * (page - 1))
             let total = await CityModel.countDocuments(querySearch)
 
             if (objects.length) {
                 return callback({
-                    key_word: data || '',
+                    key_word: data || "",
                     total: total,
                     page: page,
                     limit: limit,
-                    data: objects
+                    data: objects,
                 })
             }
 
-            const searches = data.replaceAll(',', ' ').replaceAll('  ', ' ').split(' ')
+            const searches = data.replace(/,/g, " ").replace(/  /g, " ").split(" ")
             querySearch = []
 
             for (let i = 0; i < searches.length; i++) {
-                querySearch.push({ $or: [{ slug_sub_district: new RegExp('^' + validator.viToEn(searches[i])) }, { slug_sub_district: new RegExp(validator.viToEn(searches[i]) + '$') }, ] }, { $or: [{ slug_district: new RegExp('^' + validator.viToEn(searches[i])) }, { slug_district: new RegExp(validator.viToEn(searches[i]) + '$') }, ] }, { $or: [{ slug_city: new RegExp('^' + validator.viToEn(searches[i])) }, { slug_city: new RegExp(validator.viToEn(searches[i]) + '$') }, ] }, )
+                querySearch.push(
+                    { $or: [{ slug_sub_district: new RegExp("^" + validator.viToEn(searches[i])) }, { slug_sub_district: new RegExp(validator.viToEn(searches[i]) + "$") }] },
+                    { $or: [{ slug_district: new RegExp("^" + validator.viToEn(searches[i])) }, { slug_district: new RegExp(validator.viToEn(searches[i]) + "$") }] },
+                    { $or: [{ slug_city: new RegExp("^" + validator.viToEn(searches[i])) }, { slug_city: new RegExp(validator.viToEn(searches[i]) + "$") }] }
+                )
             }
 
             querySearch = {
-                $or: querySearch
+                $or: querySearch,
             }
 
             if (validator.isDefine(level) && level) {
                 querySearch = {
                     ...querySearch,
-                    level: level
+                    level: level,
                 }
             }
 
@@ -150,11 +155,11 @@ io.sockets.on('connection', (socket) => {
             for (let i = 0; i < objects.length; i++) {
                 objects[i] = {
                     ...objects[i]._doc,
-                    stt: validator.counterChacterInString(validator.viToEn(data).replaceAll('  ', ' ').replaceAll(' ', ','), objects[i]._doc.slug_all)
+                    stt: validator.counterChacterInString(validator.viToEn(data).replace(/  /g, " ").replace(/ /g, ","), objects[i]._doc.slug_all),
                 }
             }
 
-            objects.sort(function(a, b) {
+            objects.sort(function (a, b) {
                 return b.stt - a.stt
             })
 
@@ -164,13 +169,12 @@ io.sockets.on('connection', (socket) => {
                 objectsFinal.push(objects[i])
             }
 
-
             callback({
-                key_word: data || '',
+                key_word: data || "",
                 total: total,
                 page: page,
                 limit: limit,
-                data: objectsFinal
+                data: objectsFinal,
             })
         } catch (e) {
             validator.throwError(e)
@@ -179,45 +183,8 @@ io.sockets.on('connection', (socket) => {
     })
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // const validator = require('./helper/validator')
-//     //#region 
+//     //#region
 
 // const multer = require('multer')
 // const path = require('path')
@@ -294,7 +261,6 @@ io.sockets.on('connection', (socket) => {
 
 // }
 
-
 // async function updateZone(req, res) {
 //     try {
 
@@ -314,8 +280,6 @@ io.sockets.on('connection', (socket) => {
 
 //             }
 //         })
-
-
 
 //         let upload = multer({ storage: storage }).array('avatar', 100);
 //         upload(req, res, function(err) {
@@ -367,7 +331,6 @@ io.sockets.on('connection', (socket) => {
 
 //     return counter
 // }
-
 
 // app.get('/', async(req, res) => {
 //         try {
@@ -422,7 +385,6 @@ io.sockets.on('connection', (socket) => {
 //             //     }).end()
 //             // }
 
-
 //             // querySearch = {
 //             //     $or : [
 //             //         { slug_sub_district: new RegExp( validator.viToEn(req.query.search).split(' ')[validator.viToEn(req.query.search).split(' ').length-1] +'$') },
@@ -441,7 +403,6 @@ io.sockets.on('connection', (socket) => {
 //             //         data: objects
 //             //     }).end()
 //             // }
-
 
 //             const searches = req.query.search.replaceAll(',', ' ').replaceAll('  ', ' ').split(' ')
 //             querySearch = []
@@ -477,8 +438,6 @@ io.sockets.on('connection', (socket) => {
 //                 }
 //             }
 
-
-
 //             objects.sort(function(a, b) {
 //                 return b.stt - a.stt
 //             })
@@ -488,7 +447,6 @@ io.sockets.on('connection', (socket) => {
 //             for (let i = 0; i < objects.length && i < limit; i++) {
 //                 objectsFinal.push(objects[i])
 //             }
-
 
 //             res.json({
 //                 key_word: req.query.search || '',
