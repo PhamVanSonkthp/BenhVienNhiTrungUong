@@ -1,5 +1,5 @@
 <%- include("header", {tab: "home" , title: "Trang chủ" }); %>
-    <script type="text/javascript" src="./../../../../../../public/javascripts/qrcode.min.js"></script>
+    <script type="text/javascript" src="./../../../../../../javascripts/qrcode.min.js"></script>
     <style>
         .imageuploadify {
             max-width: 100% !important;
@@ -36,52 +36,226 @@
             display: none !important;
         }
     </style>
-    <div class="text-center" style="font-weight: bold;font-size: 1.5rem;font-family: 'Roboto';">
-        Nhấn thả file rồi chọn các file excel
+    <div class="text-center">
+        Thả các file excel vào đây
     </div>
 
     <form class="mt-5" id="form_upload" enctype="multipart/form-data" method="post">
         <input autocomplete="off" type="file" name="avatar" accept="*" multiple>
     </form>
 
-    <div class="text-center mt-5" style="justify-content: space-between;align-items: center;display: flex;">
+    <div class="text-center mt-5">
         <button type="button" class="btn btn-success" style="float: left" onclick="save()">Sau khi thả file, nhấn vào đây để cập nhật dữ liệu</button>
-        <div>
-            <span style="float: left">Tổng kết quả:</span><span class="ml-1" id="lbl_total_form">0</span>
-        </div>
 
-        <button type="button" class="btn btn-danger" style="float: right" onclick="printPage()">In kết quả</button>
+        <button type="button" class="btn btn-success" style="float: right" onclick="printPage()">In kết quả</button>
     </div>
 
-    <div id="myfrm" style="height:297mm; overflow-y: auto;clear: both;"></div>
+    <div id="myfrm" style="height:297mm; overflow-y: auto;clear: both;">
+        <!-- <div style="width: 210mm;padding: 15mm;height:265mm;position: relative;">
+                <div style="display: flex;gap: 10px;">
+                    <div style="flex: 1;">
+                        <img style="width: 100%;" id="imgIcon" src="./../images/logo-byt.png" />
+                    </div>
+
+                    <div style="flex: 5;">
+                        <div style="text-align: center;">
+                            SỞ Y TẾ BÁC GIANG
+                        </div>
+                        <div style="font-style: italic;text-align: center;">
+                            (Bac Giang Department of Health)
+                        </div>
+
+                        <div style="text-align: center;font-weight: bold;">
+                            PHÒNG XÉT NGHIỆM TÂN DÂN
+                        </div>
+                        <div style="text-align: center;font-weight: bold;">
+                            (Tan Dan Molecular Biology Lab)
+                        </div>
+
+                        <div style="text-align: center;margin-top: 2mm;">
+                            Địa chỉ/Address: Đường ... ..., Bắc ..., TP Bắc Giang, tỉnh Bắc Giang
+                        </div>
+
+                        <div style="text-align: center;">
+                            ... ...Road, Bắc ..., Bac Giang city, Bac Giang province
+                        </div>
+
+                        <div style="text-align: center;">
+                            DDT/Phone: 03224xxxxxx/ Email: chamsockhbg@gmail.com
+                        </div>
+
+                        <div style="font-weight: bold;text-align: center;">
+                            Số phiếu/ No: 877 /XNSART-CoV-2
+                        </div>
+
+                        <div style="font-weight: bold;font-size: 21px;line-height: 21px;text-align: center;margin-top: 2mm;">
+                            PHIẾU TRẢ LỜI KẾT QUẢ XÉT NGHIỆM
+                        </div>
+
+                        <div style="font-weight: bold;font-size: 21px;line-height: 25px;text-align: center;">
+                            LABORRATORY TEST REPORT
+                        </div>
+
+                    </div>
+
+                    <div style="flex: 1;">
+                        <div id="id_qrcode"></div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2mm;">
+                    <span>Họ và tên/Full name:</span><span style="font-weight: bold;margin-left: 2mm;">ZHANG YOU</span><span>/ ZHANG YOU</span>
+                </div>
+
+                <div style="display: flex;gap: 10px;margin-top: 2mm;">
+                    <div style="flex: 1;">
+                        <span>Ngày sinh/ Date of birth:</span><span style="font-weight: bold;margin-left: 2mm;">07/10/2021</span>
+                    </div>
+
+                    <div style="flex: 1;">
+                        <span>Giới tính/ Gender:</span><span style="font-weight: bold;margin-left: 2mm;">Nam</span><span>/ Male</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2mm;">
+                    <span>Quốc tịch/ Nationality:</span><span style="font-weight: bold;margin-left: 2mm;">Không rõ</span><span>/ Không rõ</span>
+                </div>
+
+                <div style="margin-top: 2mm;">
+                    <span>Số căn cước/ Hộ chiếu/ Citizen Identification number/ Passport No:</span><span style="font-weight: bold;margin-left: 2mm;">EH4780012</span>
+                </div>
+
+                <div style="display: flex;margin-top: 2mm;">
+                    <span>Địa chỉ/ Address:</span>
+                    <div>
+                        <div style="font-weight: bold;margin-left: 2mm;">EH4780012, Xã song khe, TP bắc giang</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2mm;">
+                    <span>Yêu cầu xét nghiệm/ Test required:</span><span style="font-weight: bold;margin-left: 2mm;">Realtime RT - Covid-2</span>
+                </div>
+
+                <div style="margin-top: 2mm;">
+                    <span><span style="font-weight: bold;">Mã bệnh phẩm</span>/ Sample ID:</span><span style="font-weight: bold;margin-left: 2mm;">HT4215454541</span>
+                </div>
+
+                <table style="width: 100%;margin-top: 2mm;">
+                    <tr style="text-align: center;">
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Bệnh phẩm thu thập<br>(Type of sample)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Lần lấy mẫu<br>(No of Collection)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Ngày/ giờ lấy mẫu<br>(Date/time of Collection)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Tình trạnh mẫu sau khi nhận<br>(Sample Status)</td>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Dịch tỵ hầu<br>(Nasopharyngeal Swab)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;"></td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;"></td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;"><span style="font-weight: bold;">Đạt</span><br>(Qualified)</td>
+                    </tr>
+                </table>
+
+                <div style="margin-top: 2mm;">
+                    <span><span style="font-weight: bold;">Kết quả xét nghiệm</span>/ Lab Result:</span>
+                </div>
+                <table style="width: 100%;margin-top: 2mm;">
+                    <tr style="text-align: center;">
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Mã bệnh phẩm xét nghiệm<br>(Sample ID)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Kỹ thuật xét nghiệm<br>(Method)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Lần xét nghiệm<br>(Nº of testing)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Ngày thực hiện<br>(Date of testing)</td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Kết quả<br>(Result)</td>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;"></td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;"></td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;"></td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;"></td>
+                        <td style="border: 1px solid black;margin: 0;padding: 2mm;"><span style="font-weight: bold;"></span><br></td>
+                    </tr>
+                </table>
+
+                <div style="margin-top: 2mm;">
+                    <span><span style="font-weight: bold;">Kết luận</span>/ Conclusion:</span><span style="font-weight: bold;margin-left: 2mm;">Âm tính</span><span style="margin-left: 2mm;">(Negative to Virus Sars-CoV-2)</span>
+                </div>
+
+                <div style="margin-top: 2mm;display:flex">
+                    <div style="text-align: center;flex: 1;">
+                        <div>
+                            Ngày/giờ trả kết quả: 17h00' ngày 28/10/2021
+                        </div>
+                        <div>
+                            Result Date: 05-00 PM - Octorber 28th 2021
+                        </div>
+                    </div>
+
+                    <div style="text-align: center;flex: 1;">
+                        <div>
+                            Bắc Giang, ngày 28 tháng 10 năm 2021
+                        </div>
+                        <div>
+                            Bac Giang, Oct - 28th 2021
+                        </div>
+                    </div>
+
+                </div>
+
+                <div style="position: absolute; bottom:0;margin: auto;left: 0;right: 0;">
+                    <div style="display:flex;">
+                        <div style="text-align: center;flex: 1;">
+                            <div style="font-weight: bold;">
+                                Kỹ thuật xét nghiệm
+                            </div>
+                            <div>
+                                (Testing Technician)
+                            </div>
+                        </div>
+    
+                        <div style="text-align: center;flex: 1;">
+                            <div style="font-weight: bold;">
+                                Lãnh đạo đơn vị
+                            </div>
+                            <div>
+                                (Head of Hospital)
+                            </div>
+                        </div>
+    
+                    </div>
+    
+                    <div style="margin-top: 20mm;display:flex">
+                        <div style="text-align: center;flex: 1;">
+                            <div style="font-weight: bold;">
+                                CNXN, Nguyễn Thị Thủy
+                            </div>
+                        </div>
+    
+                        <div style="text-align: center;flex: 1;">
+                            <div style="font-weight: bold;">
+                                PGĐ, Nguyễn Đức Thắng
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+
+                
+                
+            </div> -->
+
+
+    </div>
+
+
 
     <script>
-        let objects = []
-
         function printPage() {
-            $('#loading').show()
-            var files = $('input[name=avatar]')[0].files
 
-            if (!objects.length) {
-                alert('Chưa chọn file')
-                return
-            }
+            var printContents = document.getElementById('myfrm').innerHTML;
+            var originalContents = document.body.innerHTML;
 
-            for (let i = 0; i < objects.length; i++) {
+            document.body.innerHTML = printContents;
 
-                objects[i] = objects[i].id
-            }
-
-            window.open('./../admin/profiles/' + objects)
-
-            // return
-
-            // var printContents = document.getElementById('myfrm').innerHTML;
-            // var originalContents = document.body.innerHTML;
-
-            // document.body.innerHTML = printContents;
-
-            // window.print()
+            window.print()
 
             //document.body.innerHTML = originalContents;
 
@@ -127,15 +301,13 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        objects = response
                         hideLoading()
                             //alert('Đã cập nhật cấp độ dịch!')
                         $('#myfrm').html('')
-                        $('#lbl_total_form').html(response.length)
 
                         let page = ''
 
-                        for (let i = 0; i < response.length && i < 5; i++) {
+                        for (let i = 0; i < response.length; i++) {
                             page = `<div style="width: 210mm;padding: 15mm;height:265mm;position: relative;line-height : 1;">
                                         <div>
 
@@ -155,7 +327,7 @@
                                                         (An Binh Molecular Biology Lab)
                                                     </div>
 
-                                                    <div style="border-bottom: 1px solid black;margin-right: 30%;margin-left: 30%;margin-bottom: 2mm;padding-bottom: 2mm;">
+                                                    <div style="border-bottom: 1px solid black;width: 50%;float: right;margin-bottom: 2mm;padding-bottom: 2mm;">
 
                                                     </div>
 
@@ -176,7 +348,7 @@
                                                         (Independence - Liberty - Happiness)
                                                     </div>
 
-                                                    <div style="border-bottom: 1px solid black;margin-right: 30%;margin-left: 30%;margin-bottom: 2mm;padding-bottom: 2mm;">
+                                                    <div style="border-bottom: 1px solid black;width: 50%;float: right;margin-bottom: 2mm;padding-bottom: 2mm;">
 
                                                     </div>
                                                 </div>
@@ -184,16 +356,16 @@
 
                                             <div style="display: flex;gap: 10px;">
                                                 <div style="flex: 1;">
-                                                    <img style="width: 100%;" id="imgIcon" src="./../public/images/logo-byt.png">
+                                                    <img style="width: 100%;" id="imgIcon" src="./../images/logo-byt.png">
                                                 </div>
 
                                                 <div style="flex: 5;justify-content: center;flex: 5;display: flex;align-items: center;flex-direction: column;">
 
-                                                    <div style="font-weight: bold;font-size: 6mm;;line-height: 21px;text-align: center;margin-top: 12mm;">
+                                                    <div style="font-weight: bold;font-size: 21px;line-height: 21px;text-align: center;margin-top: 2mm;">
                                                         PHIẾU TRẢ LỜI KẾT QUẢ XÉT NGHIỆM
                                                     </div>
 
-                                                    <div style="font-size: 5.3mm;line-height: 25px;text-align: center;margin-top: 1mm;">
+                                                    <div style="font-weight: bold;font-size: 21px;line-height: 25px;text-align: center;">
                                                         CERTIFICATE OF TESTING FOR SARS-COV-2
                                                     </div>
 
@@ -204,103 +376,97 @@
                                                 </div>
                                             </div>
                                             
-                                            <div style="margin-left: 9mm;margin-right: 9mm;">
+                                            <div style="margin-top: 7mm;">
+                                                <span>Họ và tên <span style="font-style: italic;">(Full name)</span>:</span><span style="font-weight: bold;margin-left: 2mm;">${escapeHtml(response[i]['Họ và tên'])}</span>
+                                            </div>
 
-                                                <div style="margin-top: 7mm;display: flex;gap: 10px;">
-                                                    <div style="flex: 1;">
-                                                        <span>Họ và tên <span style="font-style: italic;">(Full name)</span>:</span><span style="font-weight: bold;margin-left: 1mm;">${escapeHtml(response[i]['Họ và tên'])}</span>
-                                                    </div>
+                                            <div style="margin-top: 2mm;">
+                                                <span>Giới <span style="font-style: italic;">(Gender)</span>:</span><span style="font-weight: bold;margin-left: 2mm;">${escapeHtml(response[i]['Giới tính'])}</span> <span>(${escapeHtml( (response[i]['Giới tính']) == 'Name' ? 'Male' : 'Female' )})</span>
+                                            </div>
 
-                                                    <div style="flex: 1;">
-                                                        <span>Giới <span style="font-style: italic;">(Gender)</span>:</span><span style="margin-left: 1mm;">${escapeHtml(response[i]['Giới tính'])}/</span><span style="font-style:italic;">(${escapeHtml( (response[i]['Giới tính']) == 'Name' ? 'Male' : 'Female' )})</span>
-                                                    </div>
+                                            <div style="display: flex;gap: 10px;margin-top: 2mm;">
+                                                <div style="flex: 1;">
+                                                    <span>Ngày sinh <span style="font-style: italic;">(Date of Birth)</span>:</span><span style="font-weight: bold;margin-left: 2mm;">${escapeHtml(response[i]['Năm sinh'])}</span>
                                                 </div>
 
-                                                <div style="display: flex;gap: 10px;margin-top: 2mm;">
-                                                    <div style="flex: 1;">
-                                                        <span>Ngày sinh <span style="font-style: italic;">(Date of Birth)</span>:</span><span style="font-weight: bold;margin-left: 1mm;">${escapeHtml(response[i]['Năm sinh'])}</span>
-                                                    </div>
-
-                                                    <div style="flex: 1;">
-                                                        <span>Quốc tịch <span style="font-style: italic;">(Nationality)</span>:</span><span style="margin-left: 1mm;">Việt Nam</span>
-                                                    </div>
-                                                </div>
-
-                                                <div style="display: flex;gap: 10px;margin-top: 2mm;">
-                                                    <div style="flex: 1;">
-                                                        <span>Điện thoại <span style="font-style: italic;">(Phone)</span>:</span><span style="font-weight: bold;margin-left: 1mm;">${escapeHtml(response[i]['Số điện thoại'])}</span>
-                                                    </div>
-
-                                                    <div style="flex: 1;">
-                                                        <span>CCCD/Hộ chiếu <span style="font-style: italic;">(ID/Passport)</span>:</span><span style="margin-left: 1mm;">${escapeHtml(response[i]['CMT/CCCD'])}</span>
-                                                    </div>
-                                                </div>
-
-                                                <div style="display: flex;margin-top: 2mm;">
-                                                    <span>Địa chỉ <span style="font-style: italic;">(Address)</span>:</span>
-                                                    <div>
-                                                        <div style="margin-left: 1mm;">${escapeHtml(response[i]['Địa chỉ'])}, ${escapeHtml(response[i]['Xã/Phường'])}, ${escapeHtml(response[i]['Quận/Huyện'])}, ${escapeHtml(response[i]['Tỉnh/Thành Phố'])}</div>
-                                                    </div>
-                                                </div>
-
-                                                <div style="margin-top: 2mm;">
-                                                    <span>Đơn vị lấy mẫu <span style="font-style: italic;">(Specimen Collected By)</span>:</span><span style="margin-left: 1mm;">Phòng xét nghiệm An Bình </span><span style="font-style: italic;">(An Binh Molecular Biology Lab)</span>
-                                                </div>
-
-                                                <div style="margin-top: 5mm;">
-                                                    &emsp;&emsp;Chứng thực các kết quả sau đây đã được xác nhận bằng việc tiến hành xét nghiệm Covid-19 với mẫu lấy từ người nêu trên.
-                                                </div>
-
-                                                <div style="margin-top: 2mm;">
-                                                    &emsp;&emsp;(This is to certify the following results which have been confirmed by testing for COVID-19 conducted with the sample taken from the above-mentionned person).
-                                                </div>
-
-                                                <table style="width: 100%;margin-top: 5mm;border-collapse: collapse;">
-                                                    <tbody>
-                                                        <tr style="text-align: center;">
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;">Bệnh phẩm thu thập<br>(Type of sample)</td>
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;">Lần lấy mẫu<br>(No of Collection)</td>
-                                                            <td style="border: 1px solid rgb(31, 28, 28);margin: 0;">Ngày/ giờ lấy mẫu<br>(Date/time of Collection)</td>
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;">Tình trạnh mẫu sau khi nhận<br>(Sample Status)</td>
-                                                        </tr>
-                                                        <tr style="text-align: center;">
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;">Dịch tỵ hầu<br>(Nasopharyngeal Swab)</td>
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;">01</td>
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;">${getTimeAMPM(response[i]['Ngày lấy mẫu'])}<br>${escapeHtml(response[i]['Ngày lấy mẫu'].split(' ')[0])}</td>
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;"><span style="font-weight: bold;">Đạt</span><br>(Qualified)</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-
-                                                <div style="margin-top: 5mm;">
-                                                    <span style="font-weight: bold;">Kết quả xét nghiệm</span> <span style="font-style: italic;">(Lab Result)</span>:
-                                                </div>
-                                                
-                                                <table style="width: 100%;margin-top: 2mm;border-collapse: collapse;">
-                                                    <tbody>
-                                                        <tr style="text-align: center;">
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;">Mã bệnh phẩm xét nghiệm<br>(Sample ID)</td>
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;">Kỹ thuật xét nghiệm<br>(Method)</td>
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;">Lần xét nghiệm<br>(Nº of testing)</td>
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;">Ngày thực hiện<br>(Date of testing)</td>
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;">Kết quả<br>(Result)</td>
-                                                        </tr>
-                                                        
-                                                        <tr style="text-align: center;">
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;">${escapeHtml(response[i]['Barcode'])}</td>
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;">Realtime RT-PCR</td>
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;">01</td>
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;">${escapeHtml(response[i]['Ngày xét nghiệm'].split(' ')[0])}</td>
-                                                            <td style="border: 1px solid black;margin: 0;padding: 2mm;"><span style="font-weight: bold;">Âm tính</span><br><span style="font-style: italic;">(Negative)</span></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-
-                                                <div style="margin-top: 2mm;">
-                                                    <span><span style="font-weight: bold;">Kết luận</span>/ Conclusion:</span><span style="font-weight: bold;margin-left: 1mm;">Âm tính</span><span style="margin-left: 1mm;">(Negative to Virus Sars-CoV-2)</span>
+                                                <div style="flex: 1;">
+                                                    <span>Quốc tịch <span style="font-style: italic;">(Nationality)</span>:</span><span style="font-weight: bold;margin-left: 2mm;">Việt Nam</span>
                                                 </div>
                                             </div>
-                                        </div>
+
+                                            <div style="display: flex;gap: 10px;margin-top: 2mm;">
+                                                <div style="flex: 1;">
+                                                    <span>Điện thoại <span style="font-style: italic;">(Phone)</span>:</span><span style="font-weight: bold;margin-left: 2mm;">${escapeHtml(response[i]['Số điện thoại'])}</span>
+                                                </div>
+
+                                                <div style="flex: 1;">
+                                                    <span>Số hộ chiếu <span style="font-style: italic;">(Passport)</span>:</span><span style="font-weight: bold;margin-left: 2mm;">${escapeHtml(response[i]['CMT/CCCD'])}</span>
+                                                </div>
+                                            </div>
+
+                                            <div style="display: flex;margin-top: 2mm;">
+                                                <span>Địa chỉ <span style="font-style: italic;">(Address)</span>:</span>
+                                                <div>
+                                                    <div style="font-weight: bold;margin-left: 2mm;">${escapeHtml(response[i]['Địa chỉ'])}, ${escapeHtml(response[i]['Xã/Phường'])}, ${escapeHtml(response[i]['Quận/Huyện'])}, ${escapeHtml(response[i]['Tỉnh/Thành Phố'])}</div>
+                                                </div>
+                                            </div>
+
+                                            <div style="margin-top: 2mm;">
+                                                <span>Đơn vị lấy mẫu <span style="font-style: italic;">(Specimen Collected By)</span>:</span><span style="font-weight: bold;margin-left: 2mm;">Bệnh viện đa khoa Tân Dân (Tandan General Hospital)</span>
+                                            </div>
+
+                                            <div style="margin-top: 5mm;">
+                                                &emsp;&emsp;Chứng thực các kết quả sau đây đã được xác nhận bằng việc tiến hành xét nghiệm Covid-19 với mẫu lấy từ người nêu trên.
+                                            </div>
+
+                                            <div style="margin-top: 2mm;">
+                                                &emsp;&emsp;(This is to certify the following results which have been confirmed by testing for COVID-19 conducted with the sample taken from the above-mentionned person).
+                                            </div>
+
+                                            <table style="width: 100%;margin-top: 5mm;border-collapse: collapse;">
+                                                <tbody>
+                                                    <tr style="text-align: center;">
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Bệnh phẩm thu thập<br>(Type of sample)</td>
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Lần lấy mẫu<br>(No of Collection)</td>
+                                                        <td style="border: 1px solid rgb(31, 28, 28);margin: 0;">Ngày/ giờ lấy mẫu<br>(Date/time of Collection)</td>
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Tình trạnh mẫu sau khi nhận<br>(Sample Status)</td>
+                                                    </tr>
+                                                    <tr style="text-align: center;">
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Dịch tỵ hầu<br>(Nasopharyngeal Swab)</td>
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">01</td>
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">${escapeHtml(response[i]['Ngày lấy mẫu'].split(' ')[1])}<br>${escapeHtml(response[i]['Ngày lấy mẫu'].split(' ')[0])}</td>
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;"><span style="font-weight: bold;">Đạt</span><br>(Qualified)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <div style="margin-top: 5mm;">
+                                                <span style="font-weight: bold;">Kết quả xét nghiệm</span> <span style="font-style: italic;">(Lab Result)</span>:
+                                            </div>
+                                            
+                                            <table style="width: 100%;margin-top: 2mm;border-collapse: collapse;">
+                                                <tbody>
+                                                    <tr style="text-align: center;">
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Mã bệnh phẩm xét nghiệm<br>(Sample ID)</td>
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Kỹ thuật xét nghiệm<br>(Method)</td>
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Lần xét nghiệm<br>(Nº of testing)</td>
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Ngày thực hiện<br>(Date of testing)</td>
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Kết quả<br>(Result)</td>
+                                                    </tr>
+                                                    
+                                                    <tr style="text-align: center;">
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">${escapeHtml(response[i]['Barcode'])}</td>
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">Realtime RT-PCR</td>
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">01</td>
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;">${escapeHtml(response[i]['Ngày xét nghiệm'])}</td>
+                                                        <td style="border: 1px solid black;margin: 0;padding: 2mm;"><span style="font-weight: bold;">Âm tính</span><br><span style="font-style: italic;">(Negative)</span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <div style="margin-top: 2mm;">
+                                                <span><span style="font-weight: bold;">Kết luận</span>/ Conclusion:</span><span style="font-weight: bold;margin-left: 2mm;">Âm tính</span><span style="margin-left: 2mm;">(Negative to Virus Sars-CoV-2)</span>
+                                            </div>
 
                                             <div style="position: absolute; bottom:15mm;margin: auto;left: 0;right: 0;">
 
@@ -330,7 +496,7 @@
                                                         <div style="font-weight: bold;">
                                                             Kỹ thuật xét nghiệm
                                                         </div>
-                                                        <div style="margin-top:2mm;font-style: italic;">
+                                                        <div style="margin-top:2mm;">
                                                             (Testing Technician)
                                                         </div>
                                                     </div>
@@ -339,29 +505,29 @@
                                                         <div style="font-weight: bold;">
                                                             Lãnh đạo đơn vị
                                                         </div>
-                                                        <div style="margin-top:2mm;font-style: italic;">
-                                                            (Head of Laboratory)
+                                                        <div style="margin-top:2mm;">
+                                                            (Head of Hospital)
                                                         </div>
                                                     </div>
 
                                                 </div>
 
-                                                <div style="margin-top: 22mm;display:flex">
+                                                <div style="margin-top: 30mm;display:flex">
                                                     <div style="text-align: center;flex: 1;">
                                                         <div style="font-weight: bold;">
-                                                            CNXN. Phạm Thị Nhuần
+                                                            CNXN, Nguyễn Thị Thủy
                                                         </div>
                                                     </div>
 
                                                     <div style="text-align: center;flex: 1;">
                                                         <div style="font-weight: bold;">
-                                                            Nguyễn Văn Lợi
+                                                            PGĐ, Nguyễn Đức Thắng
                                                         </div>
                                                     </div>
 
                                                 </div>
                                             </div>
-                                        
+                                        </div>
                                         <div style="page-break-inside:avoid;page-break-after:always"></div>
                                     </div>`
 
@@ -383,7 +549,7 @@
 
         async function createQR(i, value) {
             await new QRCode("id_qrcode" + i, {
-                text: 'https://tracuu.phongkhamdakhoaanbinh.vn/profile/' + value,
+                text: 'https://covid.nch.gov.vn/profile/' + value,
                 width: document.getElementById("id_qrcode" + i).offsetWidth,
                 height: document.getElementById("id_qrcode" + i).offsetWidth,
                 colorDark: "#000000",
@@ -391,12 +557,6 @@
                 correctLevel: QRCode.CorrectLevel.H
             });
         }
-
-        $(document).ready(function() {
-            $('html, body').animate({
-                scrollTop: 0
-            }, 500)
-        });
     </script>
 
     <!-- END: Content -->

@@ -150,6 +150,7 @@
             },
             cache: false,
             success: function(response) {
+                console.log(response)
                 cities = response.data
                 canvasTableCity(cities)
                 $('#lbl_loading').remove()
@@ -161,7 +162,7 @@
                 stt = 0
                 count = response.total
 
-                paginator(count)
+                paginator(count, page)
             },
             error: function(data) {
 

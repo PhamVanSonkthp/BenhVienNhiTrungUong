@@ -6,19 +6,19 @@
 <head>
     <meta charset="utf-8">
     <title>Infinity technology | Login</title>
-    <link rel="shortcut icon" href="./../../public/images/icon.png">
+    <link rel="shortcut icon" href="./../../images/icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Infinity technology | Login">
     <meta name="keywords" content="24 Gruop">
 
     <!-- BEGIN: CSS Assets-->
-    <link rel="stylesheet" href="./../../public/stylesheets/app.css" />
+    <link rel="stylesheet" href="./../../stylesheets/app.css" />
     <!-- END: CSS Assets-->
 
     <!-- BEGIN: JS Assets-->
-    <script src="./../../public/javascripts/jquery.min.js"></script>
-    <script src="./../../public/javascripts/sha512.min.js"></script>
-    <script src="./../../public/javascripts/helper.js"></script>
+    <script src="./../../javascripts/jquery.min.js"></script>
+    <script src="./../../javascripts/sha512.min.js"></script>
+    <script src="./../../javascripts/helper.js"></script>
     <!-- END: JS Assets-->
 
 </head>
@@ -31,12 +31,12 @@
             <!-- BEGIN: Login Info -->
             <div class="hidden xl:flex flex-col min-h-screen">
                 <a href="" class="intro-x flex items-center pl-5 pt-4">
-                    <img class="w-10 p-2" src="./../../public/images/icon.png" style="background: white;
+                    <img class="w-10 p-2" src="./../../images/icon.png" style="background: white;
                         border-radius: 50%;">
                     <span class="hidden xl:block text-white text-lg ml-3">Infinity technology</span>
                 </a>
                 <div class="my-auto">
-                    <img class="-intro-x w-1/2 -mt-16" src="./../../public/images/illustration.svg">
+                    <img class="-intro-x w-1/2 -mt-16" src="./../../images/illustration.svg">
                     <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
                         Infinity Group
                         <br> Trust is the first!
@@ -77,12 +77,12 @@
         </div>
     </div>
     <!-- BEGIN: JS Assets-->
-    <script src="./../../public/javascripts/app.js"></script>
+    <script src="./../../javascripts/app.js"></script>
     <!-- END: JS Assets-->
 
     <script>
         if (getCookie('token')) {
-            window.location.replace('./../admin/print-pcr')
+            window.location.replace('./../admin/update-city-level')
         }
 
         $('#input_password').keypress(function(event) {
@@ -108,7 +108,7 @@
                 },
                 success: function(response) {
                     setCookie('token', response.accessToken)
-                    window.location.replace('./../admin/print-pcr')
+                    window.location.replace('./../admin/update-city-level')
                 },
                 error: function(data) {
                     $('#lbl_title_error').show()

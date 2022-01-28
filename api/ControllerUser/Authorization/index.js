@@ -31,6 +31,7 @@ module.exports = function(app) {
                 }
 
             } catch (err) {
+                validator.throwError(err)
                 res.status(500).json(err)
             }
         })

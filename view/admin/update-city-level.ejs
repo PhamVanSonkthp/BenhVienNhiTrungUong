@@ -6,21 +6,42 @@
         }
     </style>
     <div class="text-center">
-        Thả các file excel sau khi tải ở trang: <a target="_blank" style="text-decoration: revert;color: blue;" href="https://capdodich.yte.gov.vn/map">capdodich.yte.gov.vn</a> (63 tỉnh thành tương ứng với 63 file excel)
+        Chọn các file excel sau khi tải ở trang: <a target="_blank" style="text-decoration: revert;color: blue;" href="https://capdodich.yte.gov.vn/map">capdodich.yte.gov.vn</a> (63 tỉnh thành tương ứng với 63 file excel)
     </div>
 
-    <form class="mt-5" id="form_upload" enctype="multipart/form-data" method="post">
-        <input autocomplete="off" type="file" name="avatar" accept="*" multiple>
+    <form id="form_upload" enctype="multipart/form-data" method="post">
+        <input  id="input_insert_files_product" style="display: none;" autocomplete="off" type="file" name="avatar" accept="*" multiple>
+    </form>
+
+    <!-- <form class="mt-1 col-span-12" id="form_insert_upload_file" enctype="multipart/form-data" method="post">
+        <input style="display: none;" id="input_insert_files_product" autocomplete="off" type="file" name="avatar" accept="*" multiple>
+    </form> -->
+
+    <form id='form_insert_dropzone' class='dropzone mt-5'>
+
     </form>
 
     <div class="text-center mt-5">
-        <button type="button" class="btn btn-success" onclick="save()">Sau khi thả file, nhấn vào đây để cập nhật cấp độ dịch</button>
+        <button type="button" class="btn btn-success" onclick="save()">Cập nhật</button>
     </div>
 
 
     <script>
+        Dropzone.autoDiscover = false
+        var my_dropzone = new Dropzone("#form_insert_dropzone", DROPZONE_DEFAULT)
+
+    </script>
+
+    <script>
         function save() {
-            $('#loading').show()
+
+            const fileInput = document.getElementById('input_insert_files_product')
+            const dataTransfer = new DataTransfer()
+            for (let i = 0; i < my_dropzone.getAcceptedFiles().length; i++) {
+                dataTransfer.items.add(my_dropzone.getAcceptedFiles()[i])
+            }
+
+            fileInput.files = dataTransfer.files
             var files = $('input[name=avatar]')[0].files
 
             if (!files.length) {
@@ -35,7 +56,9 @@
             $('#form_upload').on('submit', (function(e) {
                 e.preventDefault()
                 var formData = new FormData(this)
-                formData.append('avatar', files)
+                //formData.append('avatar', files)
+                formData.append('avatar', fileInput.files)
+
                 $.ajax({
                     type: 'POST',
                     url: './../api/city/information/update-zone',

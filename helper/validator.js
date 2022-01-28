@@ -96,7 +96,7 @@ exports.viToEn = function(str) {
 exports.tryParseInt = function(str) {
     try {
         if (!exports.isDefine(str)) return 0
-        return parseInt(str.toString().replaceAll(',', '')) || 0;
+        return parseInt(str.toString().replace(/,/g, '')) || 0;
     } catch (e) {
         return 0;
     }
@@ -105,7 +105,7 @@ exports.tryParseInt = function(str) {
 exports.tryParseFloat = function(str) {
     try {
         if (!exports.isDefine(str)) return 0
-        return parseFloat(str.toString().replaceAll(',', '')) || 0;
+        return parseFloat(str.toString().replace(/,/g, '')) || 0;
     } catch (e) {
         return 0;
     }

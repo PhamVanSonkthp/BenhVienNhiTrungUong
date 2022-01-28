@@ -1,0 +1,255 @@
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+
+    <title>Bệnh Viện Nhi Trung Ương</title>
+    <link rel="shortcut icon" href="./../../images/logo.jpg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta name="author" content="Infinity ltd">
+    <meta name="keyword" content="Cấp độ dịch nhi trung ương | cap do dich nhi trung uong">
+    <meta name="promotion" content="Cấp độ dịch nhi trung ương | cap do dich nhi trung uong">
+    <meta name="Description" content="Cấp độ dịch nhi trung ương | cap do dich nhi trung uong">
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Cấp độ dịch nhi trung ương | cap do dich nhi trung uong" />
+    <meta property="og:description" content="Cấp độ dịch nhi trung ương | cap do dich nhi trung uong" />
+    <meta property="og:image" content="https://covid.nch.gov.vn/images/logo.png" />
+    <!-- <meta property="og:image" content="https://tracuu.phongkhamdakhoaanbinh.vn/images/logo.png" /> -->
+
+
+
+    <link rel="shortcut icon" href="./../../images/logo.jpg" type="image/x-icon"/>
+    <link rel="apple-touch-icon" href="./../../images/logo.jpg"/>
+    <link rel="apple-touch-icon" sizes="120x120" href="./../../images/logo.jpg"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="./../../images/logo.jpg"/>
+    <link rel="apple-touch-icon" sizes="152x152" href="./../../images/logo.jpg"/>
+
+    <link rel="stylesheet" href="./../stylesheets/app.css">
+    <link rel="stylesheet" href="./../stylesheets/home.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <script src="./../javascripts/jquery.min.js"></script>
+    <script src="./../../node_modules/socket.io/client-dist/socket.io.js"></script>
+
+    <script>
+        const socket = io.connect('/', {
+            secure: true
+        })
+    </script>
+    <style>
+        .text-logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: seagreen;
+            float: left;
+            padding: 17px 0px 0px 10px;
+            width: 50%;
+        }
+        .logo-t {
+            float: left;
+            padding: 10px;
+            width: 40%;
+            text-align: right;
+        }
+            .logo-t img { 
+                width: 60px;
+                float: right;
+            }
+        @media only screen and (max-width: 600px) {
+            .logo-t {
+                float: left;
+                padding: 10px;
+                width: 20%;
+            }
+            .text-logo {
+                font-size: 20px;
+                font-weight: bold;
+                color: seagreen;
+                float: left;
+                padding: 17px 0px 0px 10px;
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="intro-y" style="z-index: 1000;">
+
+        <div class="">
+            <div class="logo-t">
+                    <img src="./../images/logo.png"/>
+            </div>
+            <!-- <i class="fas fa-plus" style="font-size: 30px;color: red;"></i> -->
+            <div class="text-logo">
+                <div>Bệnh Viện Nhi Trung Ương</div>
+               <div  style="font-size: 16px;font-weight: bold;color: #f00;">Tra cứu cấp độ dịch COVID-19</div> 
+            </div>
+        </div>
+        <div style=" clear: both; "></div>
+        <div class="">
+            <div class="box grid grid-cols-12 pt-1 pb-1 search-box">
+                <div class="col-span-12 xl:col-span-12">
+                    <div class="w-full sm:w-auto sm:mt-0 sm:ml-auto md:ml-0">
+                        <div class="relative text-gray-700 dark:text-gray-300">
+                            <svg style="z-index: 100;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="ml-4 feather feather-search w-6 h-6 absolute my-auto inset-y-0 mr-3 lefr-0">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                            <input id="keyword" fo autocomplete="off" type="text" style="padding-right: 4.5rem; padding-left: 3.5rem;" name="prevent_autofill" autocorrect="off" aria-autocomplete="both" aria-haspopup="false" autocapitalize="off" role="presentation"
+                                class="p-3 h-full form-control pl-10 w-full box pr-10 placeholder-theme-13 no-border" placeholder="Tìm kiếm">
+                            <span>
+
+                        <!-- <i style="cursor: pointer;" onclick="showFilter()" class="fas fa-microphone fa-lg feather feather-search w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"></i> -->
+                    </span>
+                            <span id="container_clear_filter" style="display: none;">
+                        <svg style="cursor: pointer;position: absolute;top: -3px;" onclick="clearFilter()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search w-6 h-6 absolute my-auto inset-y-0 mr-3 right-0">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-box" id="container_drop_result">
+                <span class="relative text-gray-700 dark:text-gray-300" style="right: 0; left: 0;">
+                    <div class="box grid grid-cols-12">
+                        <div class="col-span-3 text-center p-5" style="background: seagreen;color: white;">
+                            Tỉnh/TP
+                        </div>
+                        <div class="col-span-3 text-center p-5" style="background: seagreen;color: white;">
+                            Quận/Huyện
+                        </div>
+                        <div class="col-span-3 text-center p-5" style="background: seagreen;color: white;">
+                            Phường/Xã
+                        </div>
+                        <div class="col-span-3 text-center p-5" style="background: black;color: white;">
+                            Cấp độ
+                        </div>
+                    </div>
+                </span>
+
+                <div class="relative text-gray-700 dark:text-gray-300" style="right: 0; left: 0;">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- <script src="https://247nailsalons.com/views/client/dist/js/app.js"></script> -->
+
+    <script>
+        function onSearch(val , search) {
+            if ($('#keyword').val().length) {
+                $('#container_drop_result > div').empty()
+                $('#container_drop_result > div').append('<div type="text" style="cursor: pointer;" disabled class="p-3 h-full form-control pl-5 w-full box pr-5 placeholder-theme-13 no-border"><svg width="25" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" stroke="#ef4c8c" class="w-8 h-8"> <g fill="none" fill-rule="evenodd" stroke-width="4"> <circle cx="22" cy="22" r="1"> <animate attributeName="r" begin="0s" dur="1.8s" values="1; 20" calcMode="spline" keyTimes="0; 1" keySplines="0.165, 0.84, 0.44, 1" repeatCount="indefinite"></animate> <animate attributeName="stroke-opacity" begin="0s" dur="1.8s" values="1; 0" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1" repeatCount="indefinite"></animate> </circle> <circle cx="22" cy="22" r="1"> <animate attributeName="r" begin="-0.9s" dur="1.8s" values="1; 20" calcMode="spline" keyTimes="0; 1" keySplines="0.165, 0.84, 0.44, 1" repeatCount="indefinite"></animate> <animate attributeName="stroke-opacity" begin="-0.9s" dur="1.8s" values="1; 0" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1" repeatCount="indefinite"></animate> </circle> </g> </svg></div>')
+                $('#container_fillter').show(200)
+                $('#container_drop_result > div').show(200)
+                $('#container_drop_result').show(200)
+                $('#container_clear_filter').show()
+
+                if(!search) return
+                socket.emit('search', {
+                    val: val
+                }, (response) => {
+                    response = response.data
+                    if ($('#keyword').val().length) {
+                        $('#container_drop_result > div').empty()
+                        if ((response) && response.length > 0) {
+                            for (let i = 0; i < response.length; i++) {
+
+                                let corlor_level
+                                if(response[i].level == 1){
+                                    corlor_level = 'limegreen'
+                                }else if(response[i].level == 2){
+                                    corlor_level = 'gold'
+                                }else if(response[i].level == 3){
+                                    corlor_level = 'darkorange'
+                                }else{
+                                    corlor_level = 'red'
+                                }
+
+                                $('#container_drop_result > div').append(`
+                                    <div type="text" style="h-full w-full box placeholder-theme-13 no-border">
+                                        <div class="box grid grid-cols-12" ${(i % 2 == 0 ? 'style="background-color: rgb(226, 232, 240);"' : '') }>
+                        <div class="col-span-3 text-center p-5" style="color: black;">
+                            ${response[i].city}
+                        </div>
+                        <div class="col-span-3 text-center p-5" style="color: black;">
+                            ${response[i].district}
+                        </div>
+                        <div class="col-span-3 text-center p-5" style="color: black;">
+                            ${response[i].sub_district}
+                        </div>
+                        <div class="col-span-3 text-center p-5" style="position: relative;color: black;display: flex;justify-content: center;align-items: center;">
+                            <span class="mr-2" style="margin-bottom: 2px;display: block;height: 15px;width: 15px;border-radius: 50%;background-color: ${corlor_level};">
+
+                            </span> 
+                            <span>
+                                ${response[i].level}
+                                </span>
+                            
+                        </div>
+                    </div>
+                                        </div>
+                                `)
+                            }
+                        } else {
+                            $('#container_drop_result > div').append('<div type="text" style="cursor: pointer;" disabled class="p-3 h-full form-control pl-5 w-full box pr-5 placeholder-theme-13 no-border">No results</div>')
+                        }
+
+                        $('#container_fillter').show(200)
+                        $('#container_drop_result > div').show(200)
+                        $('#container_drop_result').show(200)
+
+                    } else {
+                        $('#container_drop_result > div').hide(200)
+                        $('#container_drop_result').hide(200)
+                        $('#container_fillter').hide(200)
+                    }
+                })
+            } else {
+                // $('#container_drop_result > div').hide(200)
+                // $('#container_drop_result').hide(200)
+                $('#container_fillter').hide(200)
+                $('#container_clear_filter').hide()
+            }
+        }
+
+        function clearFilter() {
+            $('#keyword').val('')
+            $("#keyword").focus();
+            $('#container_clear_filter').hide()
+        }
+
+        // Get the input box
+        let input = document.getElementById('keyword');
+
+        // Init a timeout variable to be used below
+        let timeout = null;
+
+        // Listen for keystroke events
+        input.addEventListener('input', function (e) {
+            // Clear the timeout if it has already been set.
+            // This will prevent the previous task from executing
+            // if it has been less than <MILLISECONDS>
+            clearTimeout(timeout);
+            onSearch($("#keyword").val() , false)
+            // Make a new timeout set to go off in 1000ms (1 second)
+            timeout = setTimeout(function () {
+                onSearch($("#keyword").val() , true)
+            }, 200);
+        });
+
+        $("#keyword").focus()
+    </script>
+</body>
+
+</html>

@@ -102,7 +102,7 @@
         <i class="fa fa-picture-o"></i>
         </div>
         <div class="imageuploadify-images-list text-center">
-          <button type="button" class="btn btn-default">Thả file</button>
+          <button type="button" class="btn btn-default">Chọn file</button>
         </div>
       </div>
       `);

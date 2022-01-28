@@ -174,7 +174,6 @@ module.exports = function(app) {
             let upload = multer({ storage: storage }).array('avatar', 100);
             upload(req, res, function(err) {
                 (async() => {
-                    console.log(arrayFiles)
                     await updateData(arrayFiles)
                     res.sendStatus(200)
                 })()
@@ -217,7 +216,12 @@ module.exports = function(app) {
                         district = contents[i][key] || district
                     }
                     if (j == 2) sub_district = contents[i][key]
-                    if (j == 3) level = validator.getOnlyNumber(contents[i][key])
+                    if (j == 3) {
+                        level = validator.getOnlyNumber(contents[i][key])
+                        
+                    }
+
+                    
                     j++
                 }
 
@@ -233,7 +237,7 @@ module.exports = function(app) {
 
             for (let i = 3; i < contents.length; i++) {
                 try {
-                    await CityModel.findOneAndUpdate({
+                    const a = await ObjectModel.findOneAndUpdate({
                         city: contents[i].city,
                         district: contents[i].district,
                         sub_district: contents[i].sub_district,
@@ -246,8 +250,9 @@ module.exports = function(app) {
                         slug_sub_district: contents[i].slug_sub_district,
                         slug_all: contents[i].slug_sub_district + ' ' + contents[i].slug_district + ' ' + contents[i].slug_city,
                         level: contents[i].level,
-                    }, { upsert: true, new: true, setDefaultsOnInsert: true })
+                    }, { upsert: true, new: true })
                 } catch (err) {
+                    validator.throwError(err)
                     // console.log(contents[i])
                 }
             }

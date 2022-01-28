@@ -66,7 +66,7 @@ function formatDateFormProfileResultVI(date) {
 function formatDateFormProfileResultEN(date) {
     if (isDefine(date) && date.length) {
         let day = new Date(date.split(' ')[0].split('/')[2] + '-' + date.split(' ')[0].split('/')[1] + '-' + date.split(' ')[0].split('/')[0]).toGMTString()
-        day = day.split(',')[1].trim().split(' ')[1] + ' - ' + day.split(',')[1].trim().split(' ')[0] + '<sup>th</sup> ' + day.split(',')[1].trim().split(' ')[2]
+        day = day.split(',')[1].trim().split(' ')[1] + ' ' + day.split(',')[1].trim().split(' ')[0] + '<sup>th</sup> ' + day.split(',')[1].trim().split(' ')[2]
 
         return day
     }
@@ -77,9 +77,9 @@ function formatDateFormProfileResultEN(date) {
 function formatDateFormProfileEN(date) {
     if (isDefine(date) && date.length) {
         let day = new Date(date.split(' ')[0].split('/')[2] + '-' + date.split(' ')[0].split('/')[1] + '-' + date.split(' ')[0].split('/')[0]).toGMTString()
-        let time = formatAMPM(new Date(date.split(' ')[0].split('/')[2] + '/' + date.split(' ')[0].split('/')[1] + '/' + date.split(' ')[0].split('/')[0] + ' ' + date.split(' ')[1]))
+        let time = formatAMPM(new Date(date.split(' ')[0].split('/')[2] + '-' + date.split(' ')[0].split('/')[1] + '-' + date.split(' ')[0].split('/')[0] + ' ' + date.split(' ')[1]))
 
-        day = day.split(',')[1].trim().split(' ')[1] + ' - ' + day.split(',')[1].trim().split(' ')[0] + '<sup>th</sup> ' + day.split(',')[1].trim().split(' ')[2]
+        day = day.split(',')[1].trim().split(' ')[1] + ' ' + day.split(',')[1].trim().split(' ')[0] + '<sup>th</sup> ' + day.split(',')[1].trim().split(' ')[2]
 
         if (time.length < 8) {
             time = '0' + time
@@ -88,19 +88,6 @@ function formatDateFormProfileEN(date) {
     }
 
     return ''
-}
-
-function getTimeAMPM(date){
-
-    //return date.split(' ')[0].split('/')[2] + '-' + date.split(' ')[0].split('/')[1] + '-' + date.split(' ')[0].split('/')[0] + ' ' + date.split(' ')[1]
-    //return new Date(date.split(' ')[0].split('/')[2] + '-' + date.split(' ')[0].split('/')[1] + '-' + date.split(' ')[0].split('/')[0] + ' ' + date.split(' ')[1])
-
-    let time = formatAMPM(new Date(date.split(' ')[0].split('/')[2] + '/' + date.split(' ')[0].split('/')[1] + '/' + date.split(' ')[0].split('/')[0] + ' ' + date.split(' ')[1]))
-
-
-    if(time.length < 8) time  = '0' + time
-
-    return time
 }
 
 function formatAMPM(date) {
@@ -324,6 +311,18 @@ function empty(val) {
     return false;
 }
 
+const DROPZONE_DEFAULT = {
+    acceptedFiles: ['.xlsx'].toString(),
+    url: "./../api/profile/information/files",
+    autoProcessQueue: false,
+    addRemoveLinks: true,
+    paramName: "avatar[]",
+    uploadMultiple: true,
+    maxFiles: 100,
+    maxFilesize: 10,
+}
+
+
 function contains(input, val) {
     if (isDefine(input) && isDefine(val)) {
         for (let i = 0; i < val.length; i++) {
@@ -349,64 +348,119 @@ function CopyToClipboard(containerid) {
     }
 }
 
-function changeOffset(page) {
-    page += 1
-    let url = window.location.href.split('?')[0] + '?q=' + $('#input_keyword').val() + '&page=' + page + '&level=' + (urlParams.get('level') || 1)
-    window.location.href = url
-}
+// function changeOffset(page) {
+//     page += 1
+//     let url = window.location.href.split('?')[0] + '?q=' + $('#input_keyword').val() + '&page=' + page + '&level=' + (urlParams.get('level') || 1)
+//     window.location.href = url
+// }
 
-function paginator(data) {
-    var pagePatigation = '<div class="row dataTables_wrapper" style="float:right;padding-bottom: 25px;">';
-    //page += '<div class="col-sm-12 col-md-5"><div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Đang hiển thị ' + stt + ' -> ' + (stt + data.result - 1) + ' của ' + (parseInt(data.count)) + ' </div></div>';
-    pagePatigation += '<div class="col-sm-12 col-md-7"><div style="margin-top:10px;" class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">';
-    pagePatigation += '<ul class="pagination">';
-    count = (isDefine(data.count) ? data.count : data)
-        // if (count - offset <= 0) return
+// Phân trang
+function paginator(total_count, curent_page) {
+    $("#spn_loading").hide()
 
-    if ((count / limit) - parseInt(count / limit) > 0) {
-        count = parseInt(count / limit) + 1;
-    } else {
-        count = count / limit;
+    let pagePatigation = "";
+    pagePatigation += '<ul class="pagination home-product__pagination mt-4">';
+    if (tryParseInt(limit) == 0) {
+        limit = 20;
     }
-    count = parseInt(count)
-
-
-    for (var i = 0; i < count; i++) {
-        if (count >= 2 && i == 0) // nếu có 2 trang trở lên thì sẽ có previous
-        {
-            if (offset != 0) // nếu offset khác 0 thì previous sẽ có thể click đc
-                pagePatigation += '<li onclick="changeOffset(' + (i) + ')" class="paginate_button page-item previous" id="dataTable_previous"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">đầu</a></li>';
-            else //nếu  offset == 0 previous sẽ ko thể click đc
-                pagePatigation += '<li class="paginate_button page-item previous disabled" id="dataTable_previous"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">đầu</a></li>';
+    page = tryParseInt(curent_page);
+    const total_page = Math.ceil(tryParseInt(total_count) / tryParseInt(limit));
+    if (total_page > 1) {
+        if (page > 1) {
+            //first page
+            pagePatigation += `<li onclick="changeOffset(0)" class="paginate_button page-item first" id="paginationOptionDatatable_first" ><a href="javascript:void(0);" class="page-link"><i style="transform:rotate(180deg)" class="pagination-item__icon fas fa-angle-double-right"></i></a></li>`;
+            //previouse page
+            pagePatigation += `<li onclick="previousPage()" class="paginate_button page-item previous"  ><a href="javascript:void(0);" class="page-link"><i class="pagination-item__icon fas fa-chevron-left"></i></a></li>`;
+        } else {
+            if (page == 1) {
+                //first page
+                pagePatigation += `<li class="paginate_button page-item first disabled" id="paginationOptionDatatable_first"><a href="javascript:void(0);"  class="page-link"><i style="transform:rotate(180deg)" class="pagination-item__icon fas fa-angle-double-right"></i></a></li>`;
+            } else {
+                //first page
+                pagePatigation += `<li class="paginate_button page-item first " id="paginationOptionDatatable_first"><a href="javascript:void(0);"  class="page-link"><i style="transform:rotate(180deg)" class="pagination-item__icon fas fa-angle-double-right"></i></a></li>`;
+            }
         }
-
-        if (i == (parseInt((offset / limit)))) // nếu i nào bằng điều kiện trong if thì sẽ sáng màu xanh và ngược lại
-        {
-            pagePatigation += '<li onclick="changeOffset(' + i + ')" class="paginate_button page-item active"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">' + (i + 1) + '</a></li>';
-            if (i == count - 1 && count >= 3) {
-                pagePatigation += '<li class="paginate_button page-item next disabled" id="dataTable_next"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">cuối</a></li>';
+        //pages
+        if (total_page <= 1 + isShow * 2) {
+            for (let i = 0; i < total_page - 1; i++) {
+                if (i == page - 1) {
+                    pagePatigation += `<li onclick="changeOffset(${i})" class="paginate_button page-item active"><a href="javascript:void(0);"  class="page-link">${i + 1}</a></li>`;
+                } else {
+                    pagePatigation += `<li onclick="changeOffset(${i})" class="paginate_button page-item"><a href="javascript:void(0);" class="page-link">${i + 1}</a></li>`;
+                }
             }
         } else {
-            if (i <= 2 || i == count - 1) // hiện 5 trang đầu vaf trang cuối
-            {
-                pagePatigation += '<li  onclick="changeOffset(' + i + ')" class="paginate_button page-item"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">' + (i + 1) + '</a></li>';
-                if (i == count - 1) {
-                    pagePatigation += '<li  onclick="changeOffset(' + (i) + ')" class="paginate_button page-item next" id="dataTable_next"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">cuối</a></li>';
+            //enough pages to hide some
+            //close to beginning; only hide later pages
+            if (page <= isShow) {
+                for (let i = 0; i < isShow + 1; i++) {
+                    if (i == page - 1) {
+                        pagePatigation += `<li  onclick="changeOffset(${i})" class="paginate_button page-item active"><a href="javascript:void(0);"  class="page-link">${i + 1}</a></li>`;
+                    } else {
+                        pagePatigation += `<li onclick="changeOffset(${i})" class="paginate_button page-item"><a href="javascript:void(0);" class="page-link">${i + 1}</a></li>`;
+                    }
                 }
+                pagePatigation += `<li onclick="changeOffset(${Math.round((page + total_page) / 2)})" class="paginate_button page-item"><a href="javascript:void(0);" class="page-link">...</a></li>`;
+            } else if (total_page - isShow > page && page > isShow) {
+                //in middle; hide some front and some back
+                //page 1
+                pagePatigation += `<li onclick="changeOffset(${0})" class="paginate_button page-item"><a href="javascript:void(0);"  class="page-link">${1}</a></li>`;
+                //...
+                pagePatigation += `<li onclick="changeOffset(${Math.round(page / 2)})" class="paginate_button page-item"><a href="javascript:void(0);" class="page-link">...</a></li>`;
+                for (let i = page - 2; i < page + 1; i++) {
+                    if (i == page - 1) {
+                        pagePatigation += `<li onclick="changeOffset(${i})" class="paginate_button page-item active"><a href="javascript:void(0);" class="page-link">${i + 1}</a></li>`;
+                    } else {
+                        pagePatigation += `<li onclick="changeOffset(${i})" class="paginate_button page-item"><a href="javascript:void(0);"  class="page-link">${i + 1}</a></li>`;
+                    }
+                }
+                //...
+                pagePatigation += `<li onclick="changeOffset(${Math.round((page + total_page) / 2)})" class="paginate_button page-item"><a href="javascript:void(0);" class="page-link">...</a></li>`;
             } else {
-                if (i >= isShow - 1 && i <= isShow + 1) {
-                    pagePatigation += '<li  onclick="changeOffset(' + i + ')" class="paginate_button page-item"><a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">' + (i + 1) + '</a></li>';
-                } else {
-                    if (i == isShow - 2 || i == isShow + 3) {
-                        pagePatigation += '<li class="paginate_button page-item"><a href="javascript:void(0);" class="page-link">...</a></li>';
+                //close to end; only hide early pages
+                //page 1
+                pagePatigation += `<li onclick="changeOffset(${0})" class="paginate_button page-item"><a href="javascript:void(0);" class="page-link">${1}</a></li>`;
+                //...
+                pagePatigation += `<li onclick="changeOffset(${Math.round(page / 2)})" class="paginate_button page-item"><a href="javascript:void(0);" class="page-link">...</a></li>`;
+                for (let i = total_page - isShow - 1; i < total_page - 1; i++) {
+                    if (i == page - 1) {
+                        pagePatigation += `<li onclick="changeOffset(${i})" class="paginate_button page-item active"><a href="javascript:void(0);" class="page-link">${i + 1}</a></li>`;
+                    } else {
+                        pagePatigation += `<li onclick="changeOffset(${i})" class="paginate_button page-item"><a href="javascript:void(0);" class="page-link">${i + 1}</a></li>`;
                     }
                 }
             }
         }
-
+        //next button
+        if (page < total_page) {
+            pagePatigation += `<li onclick="changeOffset(${total_page - 1})" class="paginate_button page-item"><a href="javascript:void(0);"  class="page-link">${total_page}</a></li>`;
+            pagePatigation += `<li onclick="nextPage()" class="paginate_button page-item next" id="paginationOptionDatatable_next"><a href="javascript:void(0);" class="page-link"><i class="pagination-item__icon fas fa-chevron-right"></i></a></li>`;
+            //last page
+            pagePatigation += `<li onclick="changeOffset(${total_page - 1})" class="paginate_button page-item last" id="paginationOptionDatatable_last" ><a href="javascript:void(0);"  tabindex="10" class="page-link"><i class="pagination-item__icon fas fa-angle-double-right"></i></a></li>`;
+        } else {
+            pagePatigation += `<li onclick="changeOffset(${total_page - 1})" class="paginate_button page-item active "><a href="javascript:void(0);"  class="page-link">${total_page}</a></li>`;
+            pagePatigation += `<li class="paginate_button page-item last disabled" id="paginationOptionDatatable_last" ><a href="javascript:void(0);" class="page-link"><i class="pagination-item__icon fas fa-angle-double-right"></i></a></li>`;
+        }
+    } else {
+        pagePatigation += `<li onclick="changeOffset(${0})" class="paginate_button page-item active"><a href="javascript:void(0);" class="page-link">${1}</a></li>`;
     }
-    pagePatigation += '</ul></div></div></div>';
-
+    pagePatigation += "</ul>";
+    // $("#pagePatigation").addClass("mb-3");
     $("#pagePatigation").html(pagePatigation);
-    $("#spn_loading").hide()
+}
+function nextPage() {
+    page += 1
+    let url = window.location.href.split('?')[0] + '?q=' + $('#input_keyword').val() + '&page=' + page + '&level=' + (urlParams.get('level') || 1)
+    window.location.href = url
+}
+function previousPage() {
+    page -= 1
+    let url = window.location.href.split('?')[0] + '?q=' + $('#input_keyword').val() + '&page=' + page + '&level=' + (urlParams.get('level') || 1)
+    window.location.href = url
+
+}
+function changeOffset(page) {
+    page += 1
+    let url = window.location.href.split('?')[0] + '?q=' + $('#input_keyword').val() + '&page=' + page + '&level=' + (urlParams.get('level') || 1)
+    window.location.href = url
 }
